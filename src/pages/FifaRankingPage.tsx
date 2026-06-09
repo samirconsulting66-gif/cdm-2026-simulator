@@ -21,12 +21,18 @@ interface AdjustedEntry extends FifaRankingEntry {
   history: MatchDelta[];
 }
 
+type SortKey = 'rank' | 'evolution' | 'name' | 'confederation' | 'points' | 'pointsDelta';
+type SortDir = 'asc' | 'desc';
+
 export function FifaRankingPage() {
   const { elos } = useSim();
-  const { t } = useT();
+  const { t, teamName } = useT();
   const [filter, setFilter] = useState<ConfedFilter>('Tout');
   const [onlyWc, setOnlyWc] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
+  const [search, setSearch] = useState('');
+  const [sortKey, setSortKey] = useState<SortKey>('rank');
+  const [sortDir, setSortDir] = useState<SortDir>('asc');
 
   const ROUND_LABEL: Record<Round, string> = {
     GROUP: '',
@@ -60,12 +66,65 @@ export function FifaRankingPage() {
   }, [elos]);
 
   const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase();
     return adjusted.filter(e => {
       if (filter !== 'Tout' && e.confederation !== filter) return false;
       if (onlyWc && !e.teamId) return false;
+      if (q) {
+        const localized = (e.teamId ? teamName(e.teamId) : teamName(e.isoCode)).toLowerCase();
+        const orig = e.name.toLowerCase();
+        const code = e.fifaCode.toLowerCase();
+        if (!localized.includes(q) && !orig.includes(q) && !code.includes(q)) return false;
+      }
       return true;
     });
-  }, [adjusted, filter, onlyWc]);
+  }, [adjusted, filter, onlyWc, search, teamName]);
+
+  const sorted = useMemo(() => {
+    const collator = new Intl.Collator('fr', { sensitivity: 'base' });
+    const arr = [...filtered];
+    arr.sort((a, b) => {
+      let cmp = 0;
+      switch (sortKey) {
+        case 'rank':
+          cmp = a.currentRank - b.currentRank;
+          break;
+        case 'evolution':
+          // rankDelta > 0 = monté ; < 0 = descendu ; trie sur la valeur signée
+          cmp = a.rankDelta - b.rankDelta;
+          if (cmp === 0) cmp = a.currentRank - b.currentRank;
+          break;
+        case 'name': {
+          const na = a.teamId ? teamName(a.teamId) : teamName(a.isoCode);
+          const nb = b.teamId ? teamName(b.teamId) : teamName(b.isoCode);
+          cmp = collator.compare(na, nb);
+          break;
+        }
+        case 'confederation':
+          cmp = a.confederation.localeCompare(b.confederation);
+          if (cmp === 0) cmp = a.currentRank - b.currentRank;
+          break;
+        case 'points':
+          cmp = a.currentPoints - b.currentPoints;
+          break;
+        case 'pointsDelta':
+          cmp = a.pointsDelta - b.pointsDelta;
+          break;
+      }
+      return sortDir === 'asc' ? cmp : -cmp;
+    });
+    return arr;
+  }, [filtered, sortKey, sortDir, teamName]);
+
+  const onSort = (key: SortKey) => {
+    if (sortKey === key) {
+      setSortDir(d => (d === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortKey(key);
+      // Évolution : par défaut, descendant pour voir les plus grosses montées en haut
+      setSortDir(key === 'points' || key === 'pointsDelta' || key === 'evolution' ? 'desc' : 'asc');
+    }
+  };
 
   const wcCount = adjusted.filter(e => e.teamId).length;
   const movedCount = adjusted.filter(e => e.rankDelta !== 0).length;
@@ -116,22 +175,55 @@ export function FifaRankingPage() {
           </div>
         </div>
 
+        <div className="fifa-search-bar">
+          <div className="fifa-search-input">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
+              <circle cx="6" cy="6" r="4" stroke="currentColor" strokeWidth="1.5" fill="none"/>
+              <path d="M9 9 L12 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder={t.fifa.searchPlaceholder}
+            />
+            {search && (
+              <button
+                type="button"
+                className="fifa-search-clear"
+                onClick={() => setSearch('')}
+                aria-label="Clear"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+          <span className="fifa-search-count">
+            {sorted.length} / {adjusted.length}
+          </span>
+        </div>
+
         <div className="teams-table-card">
           <table className="teams-table fifa-ranking-table">
             <thead>
               <tr>
-                <th className="align-center">{t.fifa.cols.rank}</th>
-                <th className="align-center">{t.fifa.cols.evolution}</th>
-                <th>{t.fifa.cols.team}</th>
-                <th>{t.fifa.cols.confederation}</th>
-                <th className="align-right">{t.fifa.cols.points}</th>
-                <th className="align-right">{t.fifa.cols.deltaPoints}</th>
+                <SortableTh label={t.fifa.cols.rank}          sortKey="rank"          current={sortKey} dir={sortDir} onSort={onSort} align="center" />
+                <SortableTh label={t.fifa.cols.evolution}     sortKey="evolution"     current={sortKey} dir={sortDir} onSort={onSort} align="center" />
+                <SortableTh label={t.fifa.cols.team}          sortKey="name"          current={sortKey} dir={sortDir} onSort={onSort} />
+                <SortableTh label={t.fifa.cols.confederation} sortKey="confederation" current={sortKey} dir={sortDir} onSort={onSort} />
+                <SortableTh label={t.fifa.cols.points}        sortKey="points"        current={sortKey} dir={sortDir} onSort={onSort} align="right" />
+                <SortableTh label={t.fifa.cols.deltaPoints}   sortKey="pointsDelta"   current={sortKey} dir={sortDir} onSort={onSort} align="right" />
                 <th className="align-center">{t.fifa.cols.qualification}</th>
                 <th className="align-center">{t.fifa.cols.detail}</th>
               </tr>
             </thead>
             <tbody>
-              {filtered.map(e => {
+              {sorted.length === 0 && (
+                <tr>
+                  <td colSpan={8} className="fifa-no-results">{t.fifa.noResults}</td>
+                </tr>
+              )}
+              {sorted.map(e => {
                 const isExp = expanded === e.fifaCode;
                 const hasHistory = e.history.length > 0;
                 return (
@@ -149,6 +241,25 @@ export function FifaRankingPage() {
         </div>
       </main>
     </>
+  );
+}
+
+function SortableTh({
+  label, sortKey, current, dir, onSort, align,
+}: {
+  label: string; sortKey: SortKey; current: SortKey; dir: SortDir;
+  onSort: (k: SortKey) => void; align?: 'right' | 'center';
+}) {
+  const isActive = current === sortKey;
+  const arrow = isActive ? (dir === 'asc' ? '↑' : '↓') : '⇅';
+  return (
+    <th
+      className={`sortable ${align ? `align-${align}` : ''} ${isActive ? 'is-sorted' : ''}`}
+      onClick={() => onSort(sortKey)}
+    >
+      <span>{label}</span>
+      <span className="sort-arrow">{arrow}</span>
+    </th>
   );
 }
 

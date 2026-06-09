@@ -106,6 +106,8 @@ export const zh: Translations = {
     legendLoser: '淘汰',
     legendHint: '如果比分相同，请在"点球大战"行输入点球结果。',
     provisional: '暂定',
+    overview: '全局视图',
+    zoomHint: '点击关卡进行放大',
   },
   simFactor: {
     title: '等级因子',
@@ -144,6 +146,8 @@ export const zh: Translations = {
     wcOnly: '🏆 仅世界杯',
     wcBadge: '世界杯',
     notQualified: '未晋级',
+    searchPlaceholder: '搜索球队…',
+    noResults: '没有球队匹配筛选条件。',
     cols: {
       rank: '排名',
       evolution: '变化',

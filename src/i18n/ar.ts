@@ -106,6 +106,8 @@ export const ar: Translations = {
     legendLoser: 'مقصى',
     legendHint: 'في حالة التعادل، أدخل ركلات الترجيح في صف "ركلات الترجيح".',
     provisional: 'مؤقت',
+    overview: 'نظرة عامة',
+    zoomHint: 'انقر على مستوى للتكبير عليه',
   },
   simFactor: {
     title: 'عامل التسلسل الهرمي',
@@ -144,6 +146,8 @@ export const ar: Translations = {
     wcOnly: '🏆 المونديال فقط',
     wcBadge: 'مونديال',
     notQualified: 'غير متأهل',
+    searchPlaceholder: 'البحث عن منتخب…',
+    noResults: 'لا يوجد منتخب يطابق الفلاتر.',
     cols: {
       rank: 'المركز',
       evolution: 'التغيّر',

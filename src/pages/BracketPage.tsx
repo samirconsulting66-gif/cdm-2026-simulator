@@ -1,9 +1,24 @@
+import { useEffect, useState } from 'react';
 import { useSim } from '../store/SimulationStore';
 import { useTimezone } from '../store/TimezoneStore';
 import { TEAMS_BY_ID } from '../data/teams';
 import { Flag } from '../components/Flag';
 import { useT, format } from '../i18n';
 import { areAllGroupsComplete, groupStageProgress } from '../lib/standings';
+
+type ZoomLevel = 0 | 1 | 2 | 3 | 4;
+const ZOOM_LS_KEY = 'cdm2026-bracket-zoom';
+
+function loadZoom(): ZoomLevel {
+  try {
+    const raw = localStorage.getItem(ZOOM_LS_KEY);
+    if (raw) {
+      const n = parseInt(raw, 10);
+      if ([0, 1, 2, 3, 4].includes(n)) return n as ZoomLevel;
+    }
+  } catch { /* ignore */ }
+  return 0;
+}
 import { getChampionId, getWinnerId, getLoserId } from '../lib/bracket';
 import {
   R32_LEFT_IDS, R32_RIGHT_IDS,
@@ -186,12 +201,50 @@ function BracketCol({
 export function BracketPage() {
   const { groupMatches, knockout } = useSim();
   const { t, teamName } = useT();
+  const [zoom, setZoomState] = useState<ZoomLevel>(loadZoom);
   const ready = areAllGroupsComplete(groupMatches);
   const progress = groupStageProgress(groupMatches);
   const provisional = !ready;
   const noData = progress.played === 0;
   const champion = getChampionId(knockout);
   const championTeam = champion ? TEAMS_BY_ID[champion] : null;
+
+  const setZoom = (z: ZoomLevel) => {
+    setZoomState(z);
+    try { localStorage.setItem(ZOOM_LS_KEY, String(z)); } catch { /* ignore */ }
+  };
+
+  // Auto-zoom sur Finale dès qu'un champion est connu
+  useEffect(() => {
+    if (championTeam && zoom < 4) setZoom(4);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [champion]);
+
+  // Navigation clavier
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement) return;
+      if (e.key === 'ArrowRight') setZoom(Math.min(4, zoom + 1) as ZoomLevel);
+      else if (e.key === 'ArrowLeft') setZoom(Math.max(0, zoom - 1) as ZoomLevel);
+      else if (e.key === 'Escape') setZoom(0);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [zoom]);
+
+  const showR32 = zoom < 1;
+  const showR16 = zoom < 2;
+  const showQF  = zoom < 3;
+  const showSF  = zoom < 4;
+
+  const ZOOM_BUTTONS: { level: ZoomLevel; label: string; icon: string }[] = [
+    { level: 0, label: t.bracket.overview, icon: '⊕' },
+    { level: 1, label: t.phases.r16, icon: '⊙' },
+    { level: 2, label: t.phases.qf,  icon: '⊙' },
+    { level: 3, label: t.phases.sf,  icon: '⊙' },
+    { level: 4, label: t.phases.final, icon: '🏆' },
+  ];
 
   const finalMatch = knockout.find(m => m.id === 'M104');
   const thirdMatch = knockout.find(m => m.id === 'M103');
@@ -206,6 +259,27 @@ export function BracketPage() {
         <div>
           <h2 className="section-title" style={{ marginBottom: 4 }}>{t.bracket.title}</h2>
           <p className="page-subtitle" style={{ marginBottom: 0 }}>{t.bracket.description}</p>
+        </div>
+      </div>
+
+      <div className="bracket-zoom-bar">
+        <div className="bracket-zoom-buttons" role="radiogroup" aria-label={t.bracket.overview}>
+          {ZOOM_BUTTONS.map(b => (
+            <button
+              key={b.level}
+              type="button"
+              role="radio"
+              aria-checked={zoom === b.level}
+              className={`bracket-zoom-btn ${zoom === b.level ? 'active' : ''}`}
+              onClick={() => setZoom(b.level)}
+            >
+              <span className="bracket-zoom-icon" aria-hidden>{b.icon}</span>
+              <span className="bracket-zoom-label">{b.label}</span>
+            </button>
+          ))}
+        </div>
+        <div className="bracket-zoom-hint">
+          <kbd>←</kbd> / <kbd>→</kbd> · <kbd>Esc</kbd> — {t.bracket.zoomHint}
         </div>
       </div>
 
@@ -271,11 +345,11 @@ export function BracketPage() {
       )}
 
       <div className="bracket-scroll">
-        <div className="bracket-grid">
-          <BracketCol title={t.phases.r32} count={8} ids={R32_LEFT_IDS} spacing={1} provisional={provisional} />
-          <BracketCol title={t.phases.r16} count={4} ids={R16_LEFT_IDS} spacing={2} provisional={provisional} />
-          <BracketCol title={t.phases.qf}  count={2} ids={QF_LEFT_IDS}  spacing={3} provisional={provisional} />
-          <BracketCol title={t.phases.sf}  count={1} ids={['M101']}     spacing={4} provisional={provisional} />
+        <div className={`bracket-grid zoom-${zoom}`}>
+          {showR32 && <BracketCol title={t.phases.r32} count={8} ids={R32_LEFT_IDS} spacing={1} provisional={provisional} />}
+          {showR16 && <BracketCol title={t.phases.r16} count={4} ids={R16_LEFT_IDS} spacing={2} provisional={provisional} />}
+          {showQF  && <BracketCol title={t.phases.qf}  count={2} ids={QF_LEFT_IDS}  spacing={3} provisional={provisional} />}
+          {showSF  && <BracketCol title={t.phases.sf}  count={1} ids={['M101']}     spacing={4} provisional={provisional} />}
 
           <div className="bracket-col-wrap bracket-center-col">
             <div className="bracket-col-title centered">
@@ -293,10 +367,10 @@ export function BracketPage() {
             </div>
           </div>
 
-          <BracketCol title={t.phases.sf}  count={1} ids={['M102']}      spacing={4} provisional={provisional} />
-          <BracketCol title={t.phases.qf}  count={2} ids={QF_RIGHT_IDS}  spacing={3} provisional={provisional} />
-          <BracketCol title={t.phases.r16} count={4} ids={R16_RIGHT_IDS} spacing={2} provisional={provisional} />
-          <BracketCol title={t.phases.r32} count={8} ids={R32_RIGHT_IDS} spacing={1} provisional={provisional} />
+          {showSF  && <BracketCol title={t.phases.sf}  count={1} ids={['M102']}      spacing={4} provisional={provisional} />}
+          {showQF  && <BracketCol title={t.phases.qf}  count={2} ids={QF_RIGHT_IDS}  spacing={3} provisional={provisional} />}
+          {showR16 && <BracketCol title={t.phases.r16} count={4} ids={R16_RIGHT_IDS} spacing={2} provisional={provisional} />}
+          {showR32 && <BracketCol title={t.phases.r32} count={8} ids={R32_RIGHT_IDS} spacing={1} provisional={provisional} />}
         </div>
       </div>
 

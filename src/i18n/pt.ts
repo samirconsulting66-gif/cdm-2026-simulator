@@ -106,6 +106,8 @@ export const pt: Translations = {
     legendLoser: 'Eliminado',
     legendHint: 'Em caso de empate, insira os pênaltis na linha "Pênaltis".',
     provisional: 'provisório',
+    overview: 'Visão geral',
+    zoomHint: 'Clique num nível para ampliar',
   },
   simFactor: {
     title: 'Fator de hierarquia',
@@ -144,6 +146,8 @@ export const pt: Translations = {
     wcOnly: '🏆 Apenas Copa',
     wcBadge: 'COPA',
     notQualified: 'Não classificado',
+    searchPlaceholder: 'Buscar uma seleção…',
+    noResults: 'Nenhuma seleção corresponde aos filtros.',
     cols: {
       rank: 'Posição',
       evolution: 'Variação',

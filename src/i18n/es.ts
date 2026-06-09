@@ -106,6 +106,8 @@ export const es: Translations = {
     legendLoser: 'Eliminado',
     legendHint: 'En caso de empate, introduce los penaltis en la fila "Penaltis".',
     provisional: 'provisional',
+    overview: 'Vista global',
+    zoomHint: 'Haz clic en un nivel para acercar',
   },
   simFactor: {
     title: 'Factor de jerarquía',
@@ -144,6 +146,8 @@ export const es: Translations = {
     wcOnly: '🏆 Solo Mundial',
     wcBadge: 'MUN',
     notQualified: 'No clasificado',
+    searchPlaceholder: 'Buscar una selección…',
+    noResults: 'Ninguna selección coincide con los filtros.',
     cols: {
       rank: 'Puesto',
       evolution: 'Evolución',

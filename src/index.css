@@ -879,6 +879,76 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ===== FIFA World Ranking page ===== */
+.fifa-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.fifa-search-input {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: var(--surface);
+  flex: 1;
+  max-width: 380px;
+  color: var(--text-soft);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.fifa-search-input:focus-within {
+  border-color: var(--text);
+  box-shadow: 0 0 0 2px rgba(20, 22, 28, 0.08);
+  color: var(--text);
+}
+
+.fifa-search-input input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text);
+  padding: 2px 0;
+}
+
+.fifa-search-input input::placeholder {
+  color: var(--text-soft);
+}
+
+.fifa-search-clear {
+  background: none;
+  border: none;
+  color: var(--text-soft);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0 2px;
+  line-height: 1;
+}
+
+.fifa-search-clear:hover { color: #b91c1c; }
+
+.fifa-search-count {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.fifa-no-results {
+  text-align: center;
+  padding: 40px 20px !important;
+  color: var(--text-soft);
+  font-size: 13px;
+  font-style: italic;
+}
+
 .fifa-ranking-table tbody tr.is-wc-row {
   background: linear-gradient(90deg, rgba(212, 160, 23, 0.06) 0%, transparent 100%);
 }
@@ -1990,12 +2060,255 @@ a { color: inherit; text-decoration: none; }
   padding: 8px 4px 24px;
 }
 
+/* Niveau 0 = pas de scroll, tout le bracket dans le viewport */
+.bracket-scroll:has(.bracket-grid.zoom-0) {
+  overflow-x: visible;
+}
+
 .bracket-grid {
   display: grid;
-  grid-template-columns: repeat(9, minmax(150px, 1fr));
   gap: 14px;
-  min-width: 1380px;
   align-items: start;
+  transition: gap 0.3s ease;
+}
+
+/* Niveau 0 — Vue globale : 9 colonnes qui se partagent la largeur disponible
+   (pas de min-width forcée → aucun scroll horizontal) */
+.bracket-grid.zoom-0 {
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  gap: 6px;
+  min-width: 0;
+}
+
+/* Niveaux 1-4 : largeurs progressivement plus généreuses */
+.bracket-grid.zoom-1 {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 14px;
+  min-width: 0;
+}
+
+.bracket-grid.zoom-2 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 22px;
+  min-width: 0;
+}
+
+.bracket-grid.zoom-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  min-width: 0;
+}
+
+.bracket-grid.zoom-4 {
+  grid-template-columns: minmax(360px, 540px);
+  gap: 0;
+  justify-content: center;
+  min-width: 0;
+}
+
+/* Niveau 0 — cartes ultra-compactes pour faire tenir TOUT le bracket à l'écran */
+.bracket-grid.zoom-0 .ko-match {
+  padding: 5px 6px;
+  font-size: 10px;
+  gap: 3px;
+  border-radius: 5px;
+}
+.bracket-grid.zoom-0 .ko-team {
+  padding: 3px 6px;
+  font-size: 10.5px;
+  gap: 5px;
+  border-radius: 3px;
+}
+.bracket-grid.zoom-0 .ko-team .team-mini-flag { width: 14px; height: 9px; }
+.bracket-grid.zoom-0 .ko-team-label {
+  font-size: 10px;
+  max-width: 100%;
+}
+.bracket-grid.zoom-0 .ko-team-seed { font-size: 9.5px; }
+.bracket-grid.zoom-0 .ko-score-input {
+  width: 22px;
+  padding: 1px 0;
+  font-size: 10.5px;
+  border-radius: 3px;
+}
+.bracket-grid.zoom-0 .ko-match-meta { font-size: 8.5px; }
+.bracket-grid.zoom-0 .ko-match-label {
+  font-size: 8.5px;
+  padding: 0 4px;
+}
+.bracket-grid.zoom-0 .ko-match-date { font-size: 8.5px; }
+.bracket-grid.zoom-0 .ko-match-foot {
+  font-size: 8.5px;
+  padding-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bracket-grid.zoom-0 .bracket-col-title {
+  font-size: 9.5px;
+  padding: 4px 4px 8px;
+  margin-bottom: 8px;
+  letter-spacing: 0.3px;
+}
+.bracket-grid.zoom-0 .bracket-col-count {
+  font-size: 8.5px;
+  padding: 0 5px;
+  min-width: 14px;
+}
+.bracket-grid.zoom-0 .bracket-col { gap: 10px; }
+.bracket-grid.zoom-0 .bracket-col.spaced-2 { padding-top: 50px; gap: 80px; }
+.bracket-grid.zoom-0 .bracket-col.spaced-3 { padding-top: 150px; gap: 200px; }
+.bracket-grid.zoom-0 .bracket-col.spaced-4 { padding-top: 250px; }
+.bracket-grid.zoom-0 .bracket-center { padding-top: 110px; gap: 16px; }
+.bracket-grid.zoom-0 .bracket-center-tag { font-size: 9px; }
+.bracket-grid.zoom-0 .ko-pen-row { font-size: 8.5px; padding: 2px 0; }
+.bracket-grid.zoom-0 .ko-pen-input { width: 20px; font-size: 9.5px; }
+.bracket-grid.zoom-0 .ko-prov-badge {
+  font-size: 7.5px;
+  padding: 1px 5px;
+  top: -5px;
+}
+.bracket-grid.zoom-0 .ko-winner-tick { width: 8px; height: 8px; }
+
+/* Cartes plus grandes selon le niveau de zoom */
+.bracket-grid.zoom-1 .ko-match { font-size: 13px; padding: 10px 12px; }
+.bracket-grid.zoom-1 .ko-team { padding: 8px 11px; font-size: 13.5px; }
+.bracket-grid.zoom-1 .ko-team .team-mini-flag { width: 22px; height: 15px; }
+.bracket-grid.zoom-1 .ko-score-input { width: 34px; font-size: 14px; padding: 4px 0; }
+
+.bracket-grid.zoom-2 .ko-match { font-size: 14px; padding: 12px 14px; gap: 8px; }
+.bracket-grid.zoom-2 .ko-team { padding: 10px 13px; font-size: 14.5px; gap: 10px; }
+.bracket-grid.zoom-2 .ko-team .team-mini-flag { width: 26px; height: 17px; }
+.bracket-grid.zoom-2 .ko-score-input { width: 40px; font-size: 16px; padding: 5px 0; }
+.bracket-grid.zoom-2 .ko-match-meta { font-size: 11px; }
+.bracket-grid.zoom-2 .ko-match-foot { font-size: 11.5px; }
+
+.bracket-grid.zoom-3 .ko-match { font-size: 15px; padding: 14px 16px; gap: 10px; }
+.bracket-grid.zoom-3 .ko-team { padding: 12px 16px; font-size: 16px; gap: 12px; }
+.bracket-grid.zoom-3 .ko-team .team-mini-flag { width: 32px; height: 21px; }
+.bracket-grid.zoom-3 .ko-score-input { width: 48px; font-size: 18px; padding: 6px 0; font-weight: 800; }
+.bracket-grid.zoom-3 .ko-match-meta { font-size: 12px; }
+.bracket-grid.zoom-3 .ko-match-label { font-size: 11.5px; padding: 2px 8px; }
+.bracket-grid.zoom-3 .ko-match-foot { font-size: 12.5px; }
+
+.bracket-grid.zoom-4 .ko-match { font-size: 17px; padding: 18px 22px; gap: 14px; }
+.bracket-grid.zoom-4 .ko-team { padding: 18px 22px; font-size: 19px; gap: 16px; }
+.bracket-grid.zoom-4 .ko-team .team-mini-flag { width: 44px; height: 30px; }
+.bracket-grid.zoom-4 .ko-score-input { width: 60px; font-size: 26px; padding: 10px 0; font-weight: 800; }
+.bracket-grid.zoom-4 .ko-match-meta { font-size: 13px; }
+.bracket-grid.zoom-4 .ko-match-label { font-size: 13px; padding: 4px 12px; letter-spacing: 0.5px; }
+.bracket-grid.zoom-4 .ko-match-foot { font-size: 13.5px; padding-top: 8px; }
+.bracket-grid.zoom-4 .ko-team .ko-team-label { font-weight: 700; }
+
+/* Espacements verticaux à recalibrer quand on cache des colonnes */
+.bracket-grid.zoom-1 .bracket-col.spaced-2 { padding-top: 0; gap: 30px; }
+.bracket-grid.zoom-1 .bracket-col.spaced-3 { padding-top: 50px; gap: 90px; }
+.bracket-grid.zoom-1 .bracket-col.spaced-4 { padding-top: 130px; }
+
+.bracket-grid.zoom-2 .bracket-col.spaced-3 { padding-top: 0; gap: 60px; }
+.bracket-grid.zoom-2 .bracket-col.spaced-4 { padding-top: 100px; }
+.bracket-grid.zoom-2 .bracket-center { padding-top: 70px; }
+
+.bracket-grid.zoom-3 .bracket-col.spaced-4 { padding-top: 0; }
+.bracket-grid.zoom-3 .bracket-center { padding-top: 40px; }
+
+.bracket-grid.zoom-4 .bracket-center { padding-top: 0; gap: 32px; }
+.bracket-grid.zoom-4 .bracket-col-title { display: none; }
+
+/* La finale devient hero au niveau 4 */
+.bracket-grid.zoom-4 .ko-match.final-card {
+  border-width: 3px;
+  box-shadow: 0 12px 40px rgba(212, 160, 23, 0.30), 0 4px 14px rgba(212, 160, 23, 0.15);
+  padding: 24px 28px;
+}
+
+.bracket-grid.zoom-4 .ko-match.final-card .ko-match-label {
+  font-size: 14px;
+  padding: 5px 14px;
+}
+
+/* Cartes : transition douce */
+.ko-match {
+  transition: padding 0.3s ease, font-size 0.3s ease;
+}
+
+.ko-team {
+  transition: padding 0.3s ease, font-size 0.3s ease;
+}
+
+/* ===== Zoom bar (Phase Finale) ===== */
+.bracket-zoom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.bracket-zoom-buttons {
+  display: inline-flex;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  padding: 4px;
+  box-shadow: var(--shadow-sm);
+  gap: 2px;
+}
+
+.bracket-zoom-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: none;
+  background: transparent;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, transform 0.12s;
+  white-space: nowrap;
+}
+
+.bracket-zoom-btn:hover { color: var(--text); background: #f4f5f7; }
+
+.bracket-zoom-btn.active {
+  background: var(--text);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(20, 22, 28, 0.18);
+  transform: translateY(-1px);
+}
+
+.bracket-zoom-btn:last-child.active {
+  background: linear-gradient(135deg, #d4a017 0%, #b58404 100%);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(212, 160, 23, 0.35);
+}
+
+.bracket-zoom-icon { font-size: 13px; line-height: 1; }
+
+.bracket-zoom-hint {
+  font-size: 11px;
+  color: var(--text-soft);
+  letter-spacing: 0.2px;
+}
+
+.bracket-zoom-hint kbd {
+  display: inline-block;
+  padding: 1px 6px;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  box-shadow: 0 1px 0 var(--border-strong);
+  color: var(--text);
+  vertical-align: middle;
 }
 
 .bracket-col-wrap {

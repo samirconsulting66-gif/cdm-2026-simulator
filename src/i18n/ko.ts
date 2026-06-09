@@ -106,6 +106,8 @@ export const ko: Translations = {
     legendLoser: '탈락',
     legendHint: '동점인 경우 "승부차기" 줄에 PK를 입력하세요.',
     provisional: '잠정',
+    overview: '전체 보기',
+    zoomHint: '레벨을 클릭하여 확대',
   },
   simFactor: {
     title: '위계 계수',
@@ -144,6 +146,8 @@ export const ko: Translations = {
     wcOnly: '🏆 월드컵만',
     wcBadge: '월드컵',
     notQualified: '미출전',
+    searchPlaceholder: '팀 검색…',
+    noResults: '필터와 일치하는 팀이 없습니다.',
     cols: {
       rank: '순위',
       evolution: '변동',

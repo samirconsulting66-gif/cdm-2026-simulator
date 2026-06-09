@@ -106,6 +106,8 @@ export const en: Translations = {
     legendLoser: 'Eliminated',
     legendHint: 'In case of a draw, enter the penalty shootout in the "Penalties" row.',
     provisional: 'provisional',
+    overview: 'Overview',
+    zoomHint: 'Click a level to zoom in',
   },
   simFactor: {
     title: 'Hierarchy factor',
@@ -144,6 +146,8 @@ export const en: Translations = {
     wcOnly: '🏆 WC only',
     wcBadge: 'WC',
     notQualified: 'Not qualified',
+    searchPlaceholder: 'Search a team…',
+    noResults: 'No team matches the filters.',
     cols: {
       rank: 'Rank',
       evolution: 'Change',

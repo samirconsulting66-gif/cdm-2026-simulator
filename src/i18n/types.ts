@@ -126,6 +126,8 @@ export interface Translations {
     legendLoser: string;
     legendHint: string;
     provisional: string;
+    overview: string;          // « Vue globale »
+    zoomHint: string;          // « Clique sur un niveau pour zoomer »
   };
   simFactor: {
     title: string;
@@ -164,6 +166,8 @@ export interface Translations {
     wcOnly: string;
     wcBadge: string;
     notQualified: string;
+    searchPlaceholder: string;
+    noResults: string;
     cols: {
       rank: string;
       evolution: string;

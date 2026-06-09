@@ -106,6 +106,8 @@ export const ja: Translations = {
     legendLoser: '敗退',
     legendHint: '同点の場合は「PK戦」の欄にPKを入力してください。',
     provisional: '暫定',
+    overview: '全体ビュー',
+    zoomHint: 'レベルをクリックしてズーム',
   },
   simFactor: {
     title: 'ヒエラルキー係数',
@@ -144,6 +146,8 @@ export const ja: Translations = {
     wcOnly: '🏆 W杯のみ',
     wcBadge: 'W杯',
     notQualified: '未出場',
+    searchPlaceholder: 'チームを検索…',
+    noResults: 'フィルターに一致するチームはありません。',
     cols: {
       rank: '順位',
       evolution: '変動',

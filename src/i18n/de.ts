@@ -106,6 +106,8 @@ export const de: Translations = {
     legendLoser: 'Ausgeschieden',
     legendHint: 'Bei Gleichstand das Elfmeterschießen in der Zeile „Elfmeterschießen" eintragen.',
     provisional: 'vorläufig',
+    overview: 'Gesamtansicht',
+    zoomHint: 'Auf eine Ebene klicken zum Heranzoomen',
   },
   simFactor: {
     title: 'Hierarchie-Faktor',
@@ -144,6 +146,8 @@ export const de: Translations = {
     wcOnly: '🏆 Nur WM',
     wcBadge: 'WM',
     notQualified: 'Nicht qualifiziert',
+    searchPlaceholder: 'Mannschaft suchen…',
+    noResults: 'Keine Mannschaft entspricht den Filtern.',
     cols: {
       rank: 'Rang',
       evolution: 'Änderung',

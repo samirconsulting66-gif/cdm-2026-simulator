@@ -106,6 +106,8 @@ export const fr: Translations = {
     legendLoser: 'Éliminé',
     legendHint: 'En cas d\'égalité, saisis les tirs au but dans la ligne « Tirs au but ».',
     provisional: 'provisoire',
+    overview: 'Vue globale',
+    zoomHint: 'Clique sur un niveau pour zoomer dessus',
   },
   simFactor: {
     title: 'Facteur de hiérarchie',
@@ -144,6 +146,8 @@ export const fr: Translations = {
     wcOnly: '🏆 CdM seulement',
     wcBadge: 'CdM',
     notQualified: 'Non qualifié',
+    searchPlaceholder: 'Rechercher une équipe…',
+    noResults: 'Aucune équipe ne correspond aux filtres.',
     cols: {
       rank: 'Rang',
       evolution: 'Évolution',
