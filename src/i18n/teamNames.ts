@@ -32,6 +32,7 @@ export const TEAM_NAMES: Record<Language, Record<string, string>> = {
     ao: 'Angola', sv: 'Salvador', xk: 'Kosovo', sy: 'Syrie',
     bj: 'Bénin', cn: 'Chine', gq: 'Guinée équatoriale', lu: 'Luxembourg',
     mz: 'Mozambique', gt: 'Guatemala', ps: 'Palestine', by: 'Belarus',
+    th: 'Thaïlande', vn: 'Vietnam',
   },
   en: {
     // === 48 WC ===
@@ -61,6 +62,7 @@ export const TEAM_NAMES: Record<Language, Record<string, string>> = {
     ao: 'Angola', sv: 'El Salvador', xk: 'Kosovo', sy: 'Syria',
     bj: 'Benin', cn: 'China', gq: 'Equatorial Guinea', lu: 'Luxembourg',
     mz: 'Mozambique', gt: 'Guatemala', ps: 'Palestine', by: 'Belarus',
+    th: 'Thailand', vn: 'Vietnam',
   },
   es: {
     // === 48 Mundial ===
@@ -90,6 +92,7 @@ export const TEAM_NAMES: Record<Language, Record<string, string>> = {
     ao: 'Angola', sv: 'El Salvador', xk: 'Kosovo', sy: 'Siria',
     bj: 'Benín', cn: 'China', gq: 'Guinea Ecuatorial', lu: 'Luxemburgo',
     mz: 'Mozambique', gt: 'Guatemala', ps: 'Palestina', by: 'Bielorrusia',
+    th: 'Tailandia', vn: 'Vietnam',
   },
   ar: {
     // === 48 المونديال ===
@@ -119,6 +122,7 @@ export const TEAM_NAMES: Record<Language, Record<string, string>> = {
     ao: 'أنغولا', sv: 'السلفادور', xk: 'كوسوفو', sy: 'سوريا',
     bj: 'بنين', cn: 'الصين', gq: 'غينيا الاستوائية', lu: 'لوكسمبورغ',
     mz: 'موزمبيق', gt: 'غواتيمالا', ps: 'فلسطين', by: 'بيلاروسيا',
+    th: 'تايلاند', vn: 'فيتنام',
   },
   de: {
     // === 48 WM ===
@@ -148,6 +152,7 @@ export const TEAM_NAMES: Record<Language, Record<string, string>> = {
     ao: 'Angola', sv: 'El Salvador', xk: 'Kosovo', sy: 'Syrien',
     bj: 'Benin', cn: 'China', gq: 'Äquatorialguinea', lu: 'Luxemburg',
     mz: 'Mosambik', gt: 'Guatemala', ps: 'Palästina', by: 'Belarus',
+    th: 'Thailand', vn: 'Vietnam',
   },
   zh: {
     // === 48 世界杯 ===
@@ -177,6 +182,7 @@ export const TEAM_NAMES: Record<Language, Record<string, string>> = {
     ao: '安哥拉', sv: '萨尔瓦多', xk: '科索沃', sy: '叙利亚',
     bj: '贝宁', cn: '中国', gq: '赤道几内亚', lu: '卢森堡',
     mz: '莫桑比克', gt: '危地马拉', ps: '巴勒斯坦', by: '白俄罗斯',
+    th: '泰国', vn: '越南',
   },
   ja: {
     // === 48 ワールドカップ ===
@@ -206,6 +212,7 @@ export const TEAM_NAMES: Record<Language, Record<string, string>> = {
     ao: 'アンゴラ', sv: 'エルサルバドル', xk: 'コソボ', sy: 'シリア',
     bj: 'ベナン', cn: '中国', gq: '赤道ギニア', lu: 'ルクセンブルク',
     mz: 'モザンビーク', gt: 'グアテマラ', ps: 'パレスチナ', by: 'ベラルーシ',
+    th: 'タイ', vn: 'ベトナム',
   },
   ko: {
     // === 48 월드컵 ===
@@ -235,6 +242,7 @@ export const TEAM_NAMES: Record<Language, Record<string, string>> = {
     ao: '앙골라', sv: '엘살바도르', xk: '코소보', sy: '시리아',
     bj: '베냉', cn: '중국', gq: '적도기니', lu: '룩셈부르크',
     mz: '모잠비크', gt: '과테말라', ps: '팔레스타인', by: '벨라루스',
+    th: '태국', vn: '베트남',
   },
   pt: {
     // === 48 Copa ===
@@ -264,5 +272,6 @@ export const TEAM_NAMES: Record<Language, Record<string, string>> = {
     ao: 'Angola', sv: 'El Salvador', xk: 'Kosovo', sy: 'Síria',
     bj: 'Benim', cn: 'China', gq: 'Guiné Equatorial', lu: 'Luxemburgo',
     mz: 'Moçambique', gt: 'Guatemala', ps: 'Palestina', by: 'Bielorrússia',
+    th: 'Tailândia', vn: 'Vietnã',
   },
 };

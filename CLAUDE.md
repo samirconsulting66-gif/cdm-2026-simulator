@@ -26,7 +26,7 @@ src/
     groups.ts                     # 72 RAW_FIXTURES + buildInitialGroupMatches()
     bracket.ts                    # 32 BRACKET_SLOTS (M73–M104, seeds 1A..3-ABCDF, W74..)
     stadiums.ts                   # 16 stades (id, name, city, country)
-    fifaWorldRanking.ts           # Top 100 FIFA (avril 2026 top 20 + sept 2025 reste)
+    fifaWorldRanking.ts           # Top 100 FIFA officiel — 10 juin 2026
 
   lib/
     standings.ts                  # computeStandings + best thirds + groupStageProgress
@@ -85,7 +85,7 @@ src/
   - `cdm2026-page` : page courante (matches / standings / bracket / teams / fifa)
   - `cdm2026-bracket-zoom` : niveau de zoom Phase Finale (0-4)
 - **Heures stockées en GMT+1 (Alger)** = `SOURCE_TZ_OFFSET = 1` dans `lib/time.ts`. Le picker convertit pour l'affichage.
-- **Sortie API FIFA limitée** : les ID `FRS_Male_Football_*` (recent) retournent vide via legacy `/api/ranking-overview`. Le top 20 actuel vient de Wikipedia avril 2026 ; les rangs 21-100 du dump API id14870 (sept. 2025). Re-essayer après le 11/06/2026 quand FIFA publie la nouvelle version.
+- **Classement FIFA top 100** : version du **10 juin 2026** (dernière maj officielle FIFA). Données injectées manuellement depuis captures, top 100 complet. À ré-actualiser à la prochaine maj FIFA (~6 semaines).
 - **i18n** : pour ajouter une langue, créer `src/i18n/<code>.ts`, étendre `Language` dans `types.ts`, ajouter à `LANGUAGES`, et au `ALL` dans `index.tsx`. Ajouter aussi les entrées dans `teamNames.ts`, `stadiumLabels.ts`, `timezoneHints.ts`.
 
 ## Limitations connues
