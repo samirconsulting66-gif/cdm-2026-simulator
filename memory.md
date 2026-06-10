@@ -13,9 +13,8 @@ Notes de travail et décisions importantes prises au fil des sessions.
 ## Sources de données officielles
 
 - **Forces, positions de tirage, calendrier groupes/KO** : `Coupe du Monde 2026 - Dossier.docx` fourni le 8/06/2026. Le XML extrait via PowerShell + `Expand-Archive` (renommé en .zip).
-- **Classement FIFA top 20** : Wikipedia FR (avril 2026 confirmé). Wikipedia ne publie que le top 20.
-- **Classement FIFA top 21-100** : API `inside.fifa.com/api/ranking-overview?dateId=id14870&rankingType=football` (septembre 2025). Les ID nouveau format `FRS_Male_Football_*` retournent vide.
-- **Site SPA FIFA non scrapable directement** — il faut passer par `__NEXT_DATA__` dans le HTML SSR puis trouver l'endpoint API dans les bundles JS Next.js.
+- **Classement FIFA top 100** : version officielle du **10 juin 2026**, injectée à partir de 8 captures d'écran fournies par l'utilisateur (CF1-10, CF11-24, CF25-38, ..., CF95-108).
+- **Site SPA FIFA non scrapable directement** — historiquement on extrayait `__NEXT_DATA__` du HTML SSR puis on appelait l'endpoint API. Désormais l'injection manuelle depuis captures est plus simple à chaque maj FIFA (toutes ~6 semaines).
 
 ## Décisions techniques
 
@@ -47,6 +46,6 @@ Notes de travail et décisions importantes prises au fil des sessions.
 ## Choses non faites (TODO si jamais)
 
 - Algorithme officiel FIFA d'attribution des 8 meilleures 3<sup>es</sup> aux slots R32 (prend en compte les combinaisons de groupes d'origine).
-- Récupération du classement FIFA juin 2026 — à refaire après le 11/06/2026 (date annoncée par FIFA pour la prochaine maj).
 - Horaires précis des matchs R16/QF/SF/Finale (les valeurs actuelles sont raisonnables mais non issues du dossier officiel).
 - Audit RTL approfondi pour la version arabe (quelques composants pourraient mal s'aligner).
+- Prochaine maj du classement FIFA prévue ~6 semaines après le 10/06/2026.
