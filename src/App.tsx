@@ -3,6 +3,8 @@ import { SimulationProvider, useSim } from './store/SimulationStore';
 import { TimezoneProvider } from './store/TimezoneStore';
 import { TimezonePicker } from './components/TimezonePicker';
 import { LanguagePicker } from './components/LanguagePicker';
+import { SavePicker } from './components/SavePicker';
+import { ExportPicker } from './components/ExportPicker';
 import { I18nProvider, useT } from './i18n';
 import { TeamsPage } from './pages/TeamsPage';
 import { MatchesPage } from './pages/MatchesPage';
@@ -24,19 +26,39 @@ function loadInitialPage(): Page {
   return 'matches';
 }
 
-function SimulateButton() {
-  const { simulate } = useSim();
+function SimulateButtons() {
+  const { simulate, simulateGroups, simulateBracket, groupMatches } = useSim();
   const { t } = useT();
+  const groupsReady = groupMatches.every(m => m.homeScore !== null && m.awayScore !== null);
   return (
-    <button
-      type="button"
-      className="btn btn-simulate"
-      onClick={() => simulate()}
-      title={t.buttons.simulateTitle}
-    >
-      <span aria-hidden>🎲</span>
-      <span>{t.buttons.simulate}</span>
-    </button>
+    <div className="sim-group" role="group" aria-label={t.buttons.simulate}>
+      <span className="sim-group-icon" aria-hidden>🎲</span>
+      <button
+        type="button"
+        className="sim-group-btn primary"
+        onClick={() => simulate()}
+        title={t.buttons.simulateAllTitle}
+      >
+        {t.buttons.simulateAll}
+      </button>
+      <button
+        type="button"
+        className="sim-group-btn"
+        onClick={() => simulateGroups()}
+        title={t.buttons.simulateGroupsTitle}
+      >
+        {t.buttons.simulateGroups}
+      </button>
+      <button
+        type="button"
+        className="sim-group-btn"
+        onClick={() => simulateBracket()}
+        title={t.buttons.simulateFinalTitle}
+        disabled={!groupsReady}
+      >
+        {t.buttons.simulateFinal}
+      </button>
+    </div>
   );
 }
 
@@ -82,27 +104,34 @@ function Shell() {
     <div className="app">
       <header className="app-header">
         <div className="app-header-inner">
-          <div className="brand">
-            <span className="brand-dot" />
-            <span>{t.brand}</span>
+          <div className="app-header-top">
+            <div className="brand">
+              <span className="brand-dot" />
+              <span>{t.brand}</span>
+            </div>
+            <div className="header-actions">
+              <LanguagePicker />
+              <TimezonePicker />
+              <span className="header-divider" aria-hidden />
+              <SimulateButtons />
+              <span className="header-divider" aria-hidden />
+              <SavePicker />
+              <ExportPicker />
+              <span className="header-divider" aria-hidden />
+              <ResetButton />
+            </div>
           </div>
-          <div className="header-actions">
-            <nav className="tabs">
-              {PAGES.map(p => (
-                <button
-                  key={p.id}
-                  className={`tab ${page === p.id ? 'active' : ''}`}
-                  onClick={() => setPage(p.id)}
-                >
-                  {p.label}
-                </button>
-              ))}
-            </nav>
-            <LanguagePicker />
-            <TimezonePicker />
-            <SimulateButton />
-            <ResetButton />
-          </div>
+          <nav className="tabs">
+            {PAGES.map(p => (
+              <button
+                key={p.id}
+                className={`tab ${page === p.id ? 'active' : ''}`}
+                onClick={() => setPage(p.id)}
+              >
+                {p.label}
+              </button>
+            ))}
+          </nav>
         </div>
       </header>
 

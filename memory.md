@@ -24,7 +24,7 @@ Notes de travail et décisions importantes prises au fil des sessions.
 4. **ELO et Points FIFA séparés** — formules différentes (base 400 vs 600, K-factor vs I-factor).
 5. **Simulation pondérée par Force + α** plutôt que par classement FIFA (Force = donnée officielle du dossier).
 6. **Bracket progressif** dès 1 match joué (pas d'attente fin de phase de groupes).
-7. **Best-thirds** : top 8 affectés aux slots dans l'ordre d'apparition (simplification — l'algo FIFA officiel est plus complexe).
+7. **Best-thirds** : matching bipartite par backtracking — chaque slot `3XXXXXX` ne reçoit qu'un 3ᵉ dont la lettre de groupe est listée. Garantit qu'un 1ᵉʳ ne croise jamais un 3ᵉ de son propre groupe en R32/R16.
 8. **CSS global** dans `index.css`, pas de Tailwind/CSS-in-JS — préférence stabilité.
 
 ## Choix UX validés
@@ -33,9 +33,12 @@ Notes de travail et décisions importantes prises au fil des sessions.
 - Onglet « 2ème tour » → **« Phase Finale »** (et traduit).
 - Page Matchs organisée par **section Journée 01/02/03 + phases KO**, ordre chronologique strict.
 - Page Classement FIFA top 100 : recherche live + tri sur 6 colonnes.
-- Phase Finale : **5 niveaux de zoom progressif** (Vue globale → R16 → QF → SF → Finale), navigation `←/→/Esc` + clics tabs.
+- Phase Finale : **5 niveaux de zoom progressif** (Vue globale → R16 → QF → SF → Finale), navigation `←/→/Esc` + clics tabs. **Pas d'auto-zoom après simulation** (le niveau courant est conservé).
 - Forces éditables par équipe via slider/input/boutons ± (vert/rouge).
 - **Facteur de hiérarchie** sur Paramètre de simulation : 5 presets de α (Chaos 0.2 → Strict 2.0).
+- **3 boutons simulation** (Tout / Groupes / Phase finale) + **séparateurs verticaux** entre groupes logiques du header.
+- **Header sur 2 lignes** : actions en haut, tabs de pages en bas. Évite tout scroll horizontal.
+- **Sauvegarder + Exporter** dans le header — slots nommés en `localStorage` + export/import JSON versionné.
 
 ## Limites de l'environnement
 
@@ -45,7 +48,7 @@ Notes de travail et décisions importantes prises au fil des sessions.
 
 ## Choses non faites (TODO si jamais)
 
-- Algorithme officiel FIFA d'attribution des 8 meilleures 3<sup>es</sup> aux slots R32 (prend en compte les combinaisons de groupes d'origine).
+- Tableau FIFA officiel d'attribution exacte des 8 meilleures 3<sup>es</sup> aux slots R32 selon la combinaison de groupes qualifiés (annexe FIFA). L'implémentation actuelle (backtracking) respecte les contraintes des seeds mais ne reproduit pas le tableau exact.
 - Horaires précis des matchs R16/QF/SF/Finale (les valeurs actuelles sont raisonnables mais non issues du dossier officiel).
 - Audit RTL approfondi pour la version arabe (quelques composants pourraient mal s'aligner).
 - Prochaine maj du classement FIFA prévue ~6 semaines après le 10/06/2026.

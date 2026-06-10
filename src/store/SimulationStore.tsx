@@ -6,7 +6,8 @@ import { buildInitialBracket } from '../data/bracket';
 import { resolveBracket } from '../lib/bracket';
 import { computeStandings } from '../lib/standings';
 import { computeElos } from '../lib/elo';
-import { simulateEverything } from '../lib/random';
+import { simulateEverything, simulateGroupsOnly, simulateKnockoutOnly } from '../lib/random';
+import { createSnapshot, type SimSnapshot } from '../lib/snapshot';
 
 const LS_KEY = 'cdm2026-sim-v6';
 const FORCE_LS_KEY = 'cdm2026-forces';
@@ -38,6 +39,8 @@ interface SimContextValue extends SimState {
   ) => void;
   reset: () => void;
   simulate: () => void;
+  simulateGroups: () => void;
+  simulateBracket: () => void;
   standings: ReturnType<typeof computeStandings>;
   elos: ReturnType<typeof computeElos>;
   forceOverrides: Record<string, number>;
@@ -46,6 +49,8 @@ interface SimContextValue extends SimState {
   getForce: (teamId: string) => number;
   simFactor: number;
   setSimFactor: (v: number) => void;
+  getSnapshot: (name?: string) => SimSnapshot;
+  loadSnapshot: (snap: SimSnapshot) => void;
 }
 
 const SimContext = createContext<SimContextValue | null>(null);
@@ -153,6 +158,14 @@ export function SimulationProvider({ children }: { children: ReactNode }) {
     setState(simulateEverything(forceOverrides, simFactor));
   };
 
+  const simulateGroups = () => {
+    setState(simulateGroupsOnly(forceOverrides, simFactor));
+  };
+
+  const simulateBracket = () => {
+    setState(prev => simulateKnockoutOnly(prev.groupMatches, forceOverrides, simFactor));
+  };
+
   const setForce = (teamId: string, force: number) => {
     const clamped = Math.max(1, Math.min(100, Math.round(force)));
     setForceOverrides(prev => ({ ...prev, [teamId]: clamped }));
@@ -166,12 +179,35 @@ export function SimulationProvider({ children }: { children: ReactNode }) {
     });
   };
 
+  const getSnapshot = (name?: string): SimSnapshot =>
+    createSnapshot(
+      {
+        groupMatches: state.groupMatches,
+        knockout: state.knockout,
+        forceOverrides,
+        simFactor,
+      },
+      name,
+    );
+
+  const loadSnapshot = (snap: SimSnapshot) => {
+    const { data } = snap;
+    setState({
+      groupMatches: data.groupMatches,
+      knockout: data.knockout,
+    });
+    setForceOverrides({ ...data.forceOverrides });
+    setSimFactorState(Math.max(0.1, Math.min(3, data.simFactor)));
+  };
+
   const value: SimContextValue = {
     ...state,
     setGroupScore,
     setKoScore,
     reset,
     simulate,
+    simulateGroups,
+    simulateBracket,
     standings,
     elos,
     forceOverrides,
@@ -180,6 +216,8 @@ export function SimulationProvider({ children }: { children: ReactNode }) {
     getForce,
     simFactor,
     setSimFactor,
+    getSnapshot,
+    loadSnapshot,
   };
 
   return <SimContext.Provider value={value}>{children}</SimContext.Provider>;

@@ -78,7 +78,9 @@ function simulatePenalties(
   return { home, away };
 }
 
-export function simulateEverything(
+// Simule uniquement la phase de groupes — repropage les seeds mais vide
+// les scores éliminatoires (puisque les têtes de série changent).
+export function simulateGroupsOnly(
   forceOverrides: Record<string, number> = {},
   alpha: number = 1.0,
 ): {
@@ -91,6 +93,23 @@ export function simulateEverything(
     const { home, away } = simulateMatchScores(m.homeId, m.awayId, forceOf, alpha);
     return { ...m, homeScore: home, awayScore: away };
   });
+
+  let knockout = buildInitialBracket();
+  knockout = resolveBracket(groupMatches, knockout);
+  return { groupMatches, knockout };
+}
+
+// Simule uniquement la phase finale — conserve les résultats de groupes
+// passés en argument. Nécessite que tous les groupes soient joués.
+export function simulateKnockoutOnly(
+  groupMatches: GroupMatch[],
+  forceOverrides: Record<string, number> = {},
+  alpha: number = 1.0,
+): {
+  groupMatches: GroupMatch[];
+  knockout: KnockoutMatch[];
+} {
+  const forceOf = makeForceOf(forceOverrides);
 
   let knockout = buildInitialBracket();
   knockout = resolveBracket(groupMatches, knockout);
@@ -114,4 +133,16 @@ export function simulateEverything(
   }
 
   return { groupMatches, knockout };
+}
+
+// Simulation totale = groupes + phase finale en chaîne.
+export function simulateEverything(
+  forceOverrides: Record<string, number> = {},
+  alpha: number = 1.0,
+): {
+  groupMatches: GroupMatch[];
+  knockout: KnockoutMatch[];
+} {
+  const { groupMatches } = simulateGroupsOnly(forceOverrides, alpha);
+  return simulateKnockoutOnly(groupMatches, forceOverrides, alpha);
 }

@@ -32,9 +32,47 @@ export interface Translations {
   buttons: {
     simulate: string;
     simulateTitle: string;
+    simulateAll: string;
+    simulateGroups: string;
+    simulateFinal: string;
+    simulateAllTitle: string;
+    simulateGroupsTitle: string;
+    simulateFinalTitle: string;
     reset: string;
     resetTitle: string;
     resetConfirm: string;
+  };
+  save: {
+    button: string;
+    buttonTitle: string;
+    popoverTitle: string;
+    namePlaceholder: string;
+    saveAction: string;
+    saveActionTitle: string;
+    overwriteConfirm: string;
+    empty: string;
+    load: string;
+    loadConfirm: string;
+    delete: string;
+    deleteConfirm: string;
+    relativeTime: {
+      now: string;
+      mAgo: string;       // "{n} min"
+      hAgo: string;       // "{n} h"
+      dAgo: string;       // "{n} j"
+    };
+  };
+  exportio: {
+    button: string;
+    buttonTitle: string;
+    popoverTitle: string;
+    exportAction: string;
+    exportActionTitle: string;
+    importAction: string;
+    importActionTitle: string;
+    importError: string;
+    importSuccess: string;
+    importConfirm: string;
   };
   tz: {
     title: string;

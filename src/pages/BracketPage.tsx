@@ -214,12 +214,6 @@ export function BracketPage() {
     try { localStorage.setItem(ZOOM_LS_KEY, String(z)); } catch { /* ignore */ }
   };
 
-  // Auto-zoom sur Finale dès qu'un champion est connu
-  useEffect(() => {
-    if (championTeam && zoom < 4) setZoom(4);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [champion]);
-
   // Navigation clavier
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {

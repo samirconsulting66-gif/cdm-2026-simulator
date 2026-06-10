@@ -30,13 +30,15 @@ src/
 
   lib/
     standings.ts                  # computeStandings + best thirds + groupStageProgress
-    bracket.ts                    # resolveBracket (propagation progressive R32→Finale)
-    random.ts                     # simulateEverything(forceOverrides, α) — Poisson basé sur Force
+    bracket.ts                    # resolveBracket + matching bipartite des 3ᵉˢ aux slots
+    random.ts                     # simulateEverything / simulateGroupsOnly / simulateKnockoutOnly
     elo.ts                        # computeElos — ELO classique + Points FIFA SUM + historique
     time.ts                       # shiftDateTime + TIMEZONE_OPTIONS (19 fuseaux)
+    snapshot.ts                   # SimSnapshot + create/download/readFile (export JSON v1)
+    saveSlots.ts                  # slots nommés en localStorage (max 30, tri par date desc)
 
   store/
-    SimulationStore.tsx           # state global : groupMatches, knockout, forceOverrides, simFactor
+    SimulationStore.tsx           # state global + getSnapshot()/loadSnapshot()
     TimezoneStore.tsx             # offset GMT + shift()
 
   i18n/
@@ -53,6 +55,8 @@ src/
     LanguagePicker.tsx            # popover 9 langues avec drapeaux
     TimezonePicker.tsx            # popover 19 fuseaux groupés par continent
     SimFactorPicker.tsx           # 5 boutons Chaos→Strict (α de 0.2 à 2.0)
+    SavePicker.tsx                # popover : input nom + liste slots (charger/supprimer)
+    ExportPicker.tsx              # popover : Exporter .json / Importer fichier
 
   pages/
     MatchesPage.tsx               # 104 matchs en sections : J1/J2/J3/R32/.../Finale
@@ -71,6 +75,7 @@ src/
 - **ELO interne** : K-factor variable (30 groupes → 60 finale), formule classique `R + K·G·(S−E)` avec base 400.
 - **Points FIFA (SUM officielle)** : `P + I·(W−We)` avec base 600, I = 35 (groupes) → 60 (SF/3e/Finale), W = 0.75/0.5 sur TAB.
 - **Bracket progressif** : `resolveBracket` se lance dès le 1ᵉʳ score, les seeds 1A/2A/3-ABCDF se remplissent en temps réel selon le classement courant.
+- **Matching des 8 meilleurs 3ᵉˢ** : backtracking bipartite qui respecte la liste de groupes autorisée dans chaque seed `3XXXXXX` → impossible qu'un 1ᵉʳ affronte un 3ᵉ de son propre groupe en R32 ou R16.
 
 ## Conventions importantes
 
@@ -84,12 +89,28 @@ src/
   - `cdm2026-lang` : langue
   - `cdm2026-page` : page courante (matches / standings / bracket / teams / fifa)
   - `cdm2026-bracket-zoom` : niveau de zoom Phase Finale (0-4)
+  - `cdm2026-save-slots` : slots de sauvegarde nommés (`SaveSlot[]`)
 - **Heures stockées en GMT+1 (Alger)** = `SOURCE_TZ_OFFSET = 1` dans `lib/time.ts`. Le picker convertit pour l'affichage.
 - **Classement FIFA top 100** : version du **10 juin 2026** (dernière maj officielle FIFA). Données injectées manuellement depuis captures, top 100 complet. À ré-actualiser à la prochaine maj FIFA (~6 semaines).
 - **i18n** : pour ajouter une langue, créer `src/i18n/<code>.ts`, étendre `Language` dans `types.ts`, ajouter à `LANGUAGES`, et au `ALL` dans `index.tsx`. Ajouter aussi les entrées dans `teamNames.ts`, `stadiumLabels.ts`, `timezoneHints.ts`.
 
+## Header (2 lignes)
+
+- Ligne 1 : `Brand` à gauche · `LanguagePicker · TimezonePicker | SimulateButtons | SavePicker · ExportPicker | ResetButton` à droite.
+- Ligne 2 : tabs (`Matchs · Classement · Phase Finale · Paramètre · Classement FIFA`).
+- `zoom: 0.9` sur `:root` + `zoom: 1.12` sur `.app-header` pour une barre légèrement plus grande que le reste.
+
+## Simulation
+
+- 3 boutons dans le groupe 🎲 : **Tout** (groupes + KO), **Groupes** (phase de groupes seule), **Phase finale** (KO seul, basé sur les résultats de groupes courants ; désactivé tant que les 72 matchs ne sont pas joués).
+- Pas d'auto-zoom de la Phase Finale après simulation — le niveau choisi est conservé.
+
+## Sauvegarde / Export
+
+- **Sauvegarder** (`SavePicker`) : slots nommés en `localStorage` (`cdm2026-save-slots`, max 30). Écrasement par nom avec confirmation. Charger/Supprimer par slot.
+- **Exporter** (`ExportPicker`) : télécharge un JSON versionné (`type: "cdm2026-sim-snapshot"`, `version: 1`) contenant `{ groupMatches, knockout, forceOverrides, simFactor }`. Importer valide le format avant d'écraser l'état courant.
+
 ## Limitations connues
 
 - Calendrier post-FIFA-officiel pour les **horaires KO** (R16+) : valeurs raisonnables choisies à la main car le dossier ne les donne pas.
-- Les 8 meilleurs 3ᵉˢ sont rangés par classement courant et affectés dans l'ordre d'apparition des slots (`M74, M77, M79, M80, M81, M82, M85, M87`). Ce n'est pas l'algorithme officiel FIFA qui prend en compte les groupes d'origine — différence visible en cas d'égalité parfaite.
 - Le rendu RTL (arabe) est appliqué globalement via `document.documentElement.dir`. Quelques composants pourraient bénéficier d'un audit plus approfondi (ex. ordre des cartes dans les groupes).
