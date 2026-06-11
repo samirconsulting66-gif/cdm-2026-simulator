@@ -4103,3 +4103,120 @@ a { color: inherit; text-decoration: none; }
 .standing-table tr.pos-4 {
   background: #fad9d9;
 }
+
+/* ===================================================================
+ *  RESPONSIVE MOBILE — surcharge globale
+ *  Cible mobile portrait (≤ 768px) et très petits écrans (≤ 480px)
+ * =================================================================== */
+
+@media (max-width: 768px) {
+  /* Le zoom CSS écrase le layout mobile natif — on l'annule */
+  :root { zoom: 1; }
+  .app-header { zoom: 1; }
+
+  /* Header en 3 lignes : brand · actions · tabs */
+  .app-header-inner {
+    padding: 6px 8px 0;
+    gap: 6px;
+  }
+
+  .app-header-top {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .brand {
+    font-size: 13px;
+    justify-content: center;
+    padding: 2px 0;
+  }
+
+  .header-actions {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    row-gap: 6px;
+  }
+
+  /* Tabs scrollables horizontalement */
+  .tabs {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    padding: 4px 0 2px;
+    margin-top: 2px;
+    gap: 12px;
+  }
+
+  .tabs::-webkit-scrollbar { height: 3px; }
+  .tabs::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: 2px;
+  }
+
+  /* Bracket scrollable horizontalement (au lieu d'écraser les colonnes) */
+  .bracket-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+  }
+
+  .bracket-grid {
+    min-width: max-content;
+  }
+
+  /* Tableaux scrollables (Classement, FIFA, Paramètre) */
+  .standing-table-wrap,
+  .fifa-table-wrap,
+  .teams-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Page Matchs : padding réduit */
+  .matches-page,
+  .standings-page,
+  .bracket-page,
+  .teams-page,
+  .fifa-page {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
+/* Très petit écran : compactage extrême des boutons du header */
+@media (max-width: 480px) {
+  /* Cacher le label texte des boutons Save / Export / Reset
+     (le SVG reste visible — l'utilisateur reconnaît l'action par l'icône) */
+  .btn.btn-save > span,
+  .btn.btn-export > span,
+  .btn.btn-reset > span {
+    display: none;
+  }
+
+  .btn.btn-save,
+  .btn.btn-export,
+  .btn.btn-reset {
+    padding: 6px 8px;
+  }
+
+  /* Séparateurs verticaux superflus sur très petit */
+  .header-divider { display: none; }
+
+  /* Groupe simulation : labels plus courts via padding réduit */
+  .sim-group-btn { padding: 4px 7px; font-size: 11px; }
+  .sim-group-icon { padding: 0 4px 0 3px; font-size: 12px; }
+
+  /* Pickers langue/fuseau plus compacts */
+  .lang-picker-button,
+  .tz-picker-button {
+    padding: 4px 6px;
+  }
+
+  /* Tabs un peu plus serrés */
+  .tabs { gap: 10px; font-size: 12px; }
+  .tab { padding: 5px 1px; }
+}
