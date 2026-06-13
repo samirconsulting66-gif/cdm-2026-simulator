@@ -4156,16 +4156,26 @@ a { color: inherit; text-decoration: none; }
     font-size: 13px;
   }
 
-  /* Popovers : remplir toute la largeur du viewport au lieu de déborder.
-     Sans ça, le `right: 0` desktop fait sortir le menu hors écran. */
+  /* Popovers : on les détache du bouton parent (position: absolute relatif à
+     un élément de ~70px de large) pour qu'ils se calent sur le viewport via
+     position: fixed. On override aussi les règles RTL desktop pour garantir
+     un comportement identique LTR/RTL sur mobile. */
   .lang-popover,
   .tz-popover,
   .save-popover,
-  .export-popover {
+  .export-popover,
+  [dir="rtl"] .lang-popover,
+  [dir="rtl"] .tz-popover,
+  [dir="rtl"] .save-popover,
+  [dir="rtl"] .export-popover {
+    position: fixed;
+    top: 130px;
     left: 8px;
     right: 8px;
     min-width: 0;
     max-width: calc(100vw - 16px);
+    max-height: calc(100vh - 150px);
+    overflow-y: auto;
   }
 
   /* Tabs scrollables horizontalement */
