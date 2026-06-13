@@ -4205,52 +4205,28 @@ a { color: inherit; text-decoration: none; }
     min-width: max-content;
   }
 
-  /* Tableaux scrollables — le table HTML a son propre algorithm qui ignore
-     min-width: max-content. On force display: block + width: max-content. */
+  /* Tableaux Équipes et FIFA : on les "dézoome" à 62 % via zoom CSS pour
+     que TOUT le tableau (8 colonnes) tienne dans la largeur du viewport
+     sans avoir besoin de swiper. Effet identique à un pinch-zoom out. */
   .teams-table-card,
   .fifa-table-card {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow-x: visible;
     position: relative;
   }
 
-  /* Force le tableau à prendre sa largeur naturelle au lieu de se contracter */
+  /* Le tableau prend sa largeur naturelle, le zoom CSS réduit l'ensemble */
   .teams-table,
   .fifa-table {
     width: max-content;
     min-width: 100%;
+    zoom: 0.62;
   }
 
-  /* Cellules du tableau Équipes plus serrées sur mobile */
+  /* Cellules du tableau Équipes serrées (avant le zoom) */
   .teams-table th,
   .teams-table td {
     padding: 6px 8px;
-    font-size: 12px;
-  }
-
-  /* Pastille « → » qui flotte en haut à droite pour signaler le swipe.
-     Position fixed pour rester visible dans le viewport mobile. */
-  .teams-table-card::after,
-  .fifa-table-card::after {
-    content: '→';
-    position: sticky;
-    right: 8px;
-    top: 8px;
-    margin-left: -32px;
-    width: 24px;
-    height: 24px;
-    background: var(--text);
-    color: #fff;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     font-size: 13px;
-    font-weight: 700;
-    box-shadow: 0 2px 8px rgba(20, 22, 28, 0.3);
-    pointer-events: none;
-    float: right;
-    z-index: 10;
   }
 
   /* Header de page : moins de marge bas et padding compact */
