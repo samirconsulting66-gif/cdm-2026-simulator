@@ -4222,6 +4222,33 @@ a { color: inherit; text-decoration: none; }
     padding-left: 8px;
     padding-right: 8px;
   }
+
+  /* Cartes match : permettre aux noms d'équipes longs de wrapper sur 2 lignes
+     au lieu de déborder de la carte ("Afrique du Sud", "Bosnie-Herzégovine"). */
+  .match-card-teams {
+    gap: 8px;
+  }
+
+  .mc-side {
+    min-width: 0;          /* CRUCIAL : permet aux colonnes 1fr de se contracter */
+    gap: 7px;
+    font-size: 13px;
+  }
+
+  .mc-name {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    overflow-wrap: anywhere;
+    line-height: 1.2;
+  }
+
+  /* Drapeaux un peu plus petits sur mobile pour gagner de la place pour le nom */
+  .mc-side .team-card-flag,
+  .mc-flag-placeholder {
+    width: 28px;
+    height: 19px;
+  }
 }
 
 /* Très petit écran : compactage des boutons mais en gardant la lisibilité */
