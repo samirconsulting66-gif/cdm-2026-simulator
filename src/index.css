@@ -4264,13 +4264,19 @@ a { color: inherit; text-decoration: none; }
     display: none;
   }
 
-  /* Grille 2 colonnes face-à-face */
-  .bracket-grid {
+  /* Grille 2 colonnes face-à-face — on cible TOUS les zoom-N pour battre
+     la specificity des règles desktop .bracket-grid.zoom-X. */
+  .bracket-grid.zoom-0,
+  .bracket-grid.zoom-1,
+  .bracket-grid.zoom-2,
+  .bracket-grid.zoom-3,
+  .bracket-grid.zoom-4 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 8px 10px;
     min-width: 0;
     width: 100%;
+    justify-content: stretch;
   }
 
   .bracket-scroll {
@@ -4279,7 +4285,11 @@ a { color: inherit; text-decoration: none; }
   }
 
   /* Le centre (Finale + 3e) prend les 2 colonnes quand focus (zoom 4) */
-  .bracket-grid .bracket-center-col[data-role="focus"] {
+  .bracket-grid.zoom-0 .bracket-center-col[data-role="focus"],
+  .bracket-grid.zoom-1 .bracket-center-col[data-role="focus"],
+  .bracket-grid.zoom-2 .bracket-center-col[data-role="focus"],
+  .bracket-grid.zoom-3 .bracket-center-col[data-role="focus"],
+  .bracket-grid.zoom-4 .bracket-center-col[data-role="focus"] {
     grid-column: 1 / -1;
   }
 
@@ -4288,14 +4298,41 @@ a { color: inherit; text-decoration: none; }
     gap: 18px;
   }
 
-  /* Annuler les espacements verticaux desktop (spaced-N) qui étaient là pour
-     aligner visuellement avec le tour adjacent — inutile sans miroir. */
-  .bracket-grid .bracket-col.spaced-1,
-  .bracket-grid .bracket-col.spaced-2,
-  .bracket-grid .bracket-col.spaced-3,
-  .bracket-grid .bracket-col.spaced-4 {
+  /* Annuler les espacements verticaux desktop (spaced-N et zoom-X spaced-N)
+     qui étaient là pour aligner visuellement avec le tour adjacent — inutile
+     sans miroir. On utilise des sélecteurs zoom-X pour passer la specificity. */
+  .bracket-grid.zoom-0 .bracket-col.spaced-1,
+  .bracket-grid.zoom-0 .bracket-col.spaced-2,
+  .bracket-grid.zoom-0 .bracket-col.spaced-3,
+  .bracket-grid.zoom-0 .bracket-col.spaced-4,
+  .bracket-grid.zoom-1 .bracket-col.spaced-1,
+  .bracket-grid.zoom-1 .bracket-col.spaced-2,
+  .bracket-grid.zoom-1 .bracket-col.spaced-3,
+  .bracket-grid.zoom-1 .bracket-col.spaced-4,
+  .bracket-grid.zoom-2 .bracket-col.spaced-1,
+  .bracket-grid.zoom-2 .bracket-col.spaced-2,
+  .bracket-grid.zoom-2 .bracket-col.spaced-3,
+  .bracket-grid.zoom-2 .bracket-col.spaced-4,
+  .bracket-grid.zoom-3 .bracket-col.spaced-1,
+  .bracket-grid.zoom-3 .bracket-col.spaced-2,
+  .bracket-grid.zoom-3 .bracket-col.spaced-3,
+  .bracket-grid.zoom-3 .bracket-col.spaced-4,
+  .bracket-grid.zoom-4 .bracket-col.spaced-1,
+  .bracket-grid.zoom-4 .bracket-col.spaced-2,
+  .bracket-grid.zoom-4 .bracket-col.spaced-3,
+  .bracket-grid.zoom-4 .bracket-col.spaced-4 {
     padding-top: 0;
     gap: 7px;
+  }
+
+  /* Annuler le bracket-center (paddings énormes desktop pour zoom-0) */
+  .bracket-grid.zoom-0 .bracket-center,
+  .bracket-grid.zoom-1 .bracket-center,
+  .bracket-grid.zoom-2 .bracket-center,
+  .bracket-grid.zoom-3 .bracket-center,
+  .bracket-grid.zoom-4 .bracket-center {
+    padding-top: 0;
+    gap: 16px;
   }
 
   /* Titre de colonne : indication du côté */
@@ -4304,13 +4341,22 @@ a { color: inherit; text-decoration: none; }
     padding: 4px 4px 6px;
   }
 
-  /* Cartes du focus : compactes (2 colonnes = ~170px chacune) mais lisibles */
-  .bracket-grid [data-role="focus"] .ko-match {
+  /* Cartes du focus : compactes (2 colonnes = ~170px chacune) mais lisibles
+     On cible aussi zoom-0 pour battre les règles .bracket-grid.zoom-0 .ko-match */
+  .bracket-grid.zoom-0 [data-role="focus"] .ko-match,
+  .bracket-grid.zoom-1 [data-role="focus"] .ko-match,
+  .bracket-grid.zoom-2 [data-role="focus"] .ko-match,
+  .bracket-grid.zoom-3 [data-role="focus"] .ko-match,
+  .bracket-grid.zoom-4 [data-role="focus"] .ko-match {
     padding: 6px 7px;
     font-size: 10.5px;
     gap: 4px;
   }
-  .bracket-grid [data-role="focus"] .ko-team {
+  .bracket-grid.zoom-0 [data-role="focus"] .ko-team,
+  .bracket-grid.zoom-1 [data-role="focus"] .ko-team,
+  .bracket-grid.zoom-2 [data-role="focus"] .ko-team,
+  .bracket-grid.zoom-3 [data-role="focus"] .ko-team,
+  .bracket-grid.zoom-4 [data-role="focus"] .ko-team {
     padding: 4px 6px;
     font-size: 11px;
     gap: 5px;
@@ -4327,12 +4373,20 @@ a { color: inherit; text-decoration: none; }
     white-space: nowrap;
     min-width: 0;
   }
-  .bracket-grid [data-role="focus"] .ko-team .team-mini-flag {
+  .bracket-grid.zoom-0 [data-role="focus"] .ko-team .team-mini-flag,
+  .bracket-grid.zoom-1 [data-role="focus"] .ko-team .team-mini-flag,
+  .bracket-grid.zoom-2 [data-role="focus"] .ko-team .team-mini-flag,
+  .bracket-grid.zoom-3 [data-role="focus"] .ko-team .team-mini-flag,
+  .bracket-grid.zoom-4 [data-role="focus"] .ko-team .team-mini-flag {
     width: 16px;
     height: 11px;
     flex-shrink: 0;
   }
-  .bracket-grid [data-role="focus"] .ko-score-input {
+  .bracket-grid.zoom-0 [data-role="focus"] .ko-score-input,
+  .bracket-grid.zoom-1 [data-role="focus"] .ko-score-input,
+  .bracket-grid.zoom-2 [data-role="focus"] .ko-score-input,
+  .bracket-grid.zoom-3 [data-role="focus"] .ko-score-input,
+  .bracket-grid.zoom-4 [data-role="focus"] .ko-score-input {
     width: 24px;
     padding: 2px 0;
     font-size: 11px;
