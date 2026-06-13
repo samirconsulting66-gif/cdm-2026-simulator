@@ -4341,25 +4341,26 @@ a { color: inherit; text-decoration: none; }
     padding: 4px 4px 6px;
   }
 
-  /* Cartes du focus : compactes (2 colonnes = ~170px chacune) mais lisibles
-     On cible aussi zoom-0 pour battre les règles .bracket-grid.zoom-0 .ko-match */
+  /* Cartes du focus : on profite de l'espace disponible.
+     position: relative pour ancrer les connecteurs ::after. */
   .bracket-grid.zoom-0 [data-role="focus"] .ko-match,
   .bracket-grid.zoom-1 [data-role="focus"] .ko-match,
   .bracket-grid.zoom-2 [data-role="focus"] .ko-match,
   .bracket-grid.zoom-3 [data-role="focus"] .ko-match,
   .bracket-grid.zoom-4 [data-role="focus"] .ko-match {
-    padding: 6px 7px;
-    font-size: 10.5px;
-    gap: 4px;
+    padding: 7px 8px;
+    font-size: 11.5px;
+    gap: 5px;
+    position: relative;
   }
   .bracket-grid.zoom-0 [data-role="focus"] .ko-team,
   .bracket-grid.zoom-1 [data-role="focus"] .ko-team,
   .bracket-grid.zoom-2 [data-role="focus"] .ko-team,
   .bracket-grid.zoom-3 [data-role="focus"] .ko-team,
   .bracket-grid.zoom-4 [data-role="focus"] .ko-team {
-    padding: 4px 6px;
-    font-size: 11px;
-    gap: 5px;
+    padding: 5px 7px;
+    font-size: 12px;
+    gap: 6px;
     min-width: 0;
   }
   .bracket-grid [data-role="focus"] .ko-team-name {
@@ -4378,8 +4379,8 @@ a { color: inherit; text-decoration: none; }
   .bracket-grid.zoom-2 [data-role="focus"] .ko-team .team-mini-flag,
   .bracket-grid.zoom-3 [data-role="focus"] .ko-team .team-mini-flag,
   .bracket-grid.zoom-4 [data-role="focus"] .ko-team .team-mini-flag {
-    width: 16px;
-    height: 11px;
+    width: 20px;
+    height: 13px;
     flex-shrink: 0;
   }
   .bracket-grid.zoom-0 [data-role="focus"] .ko-score-input,
@@ -4387,10 +4388,95 @@ a { color: inherit; text-decoration: none; }
   .bracket-grid.zoom-2 [data-role="focus"] .ko-score-input,
   .bracket-grid.zoom-3 [data-role="focus"] .ko-score-input,
   .bracket-grid.zoom-4 [data-role="focus"] .ko-score-input {
-    width: 24px;
-    padding: 2px 0;
-    font-size: 11px;
+    width: 28px;
+    padding: 3px 0;
+    font-size: 12px;
     flex-shrink: 0;
+  }
+
+  /* =========================================================
+   * Connecteurs visuels (style bracket classique)
+   * Chaque paire (2 matchs consécutifs) → 1 match au tour suivant.
+   * Les connecteurs partent du bord interne (vers le centre du viewport).
+   *
+   * Côté gauche : traits qui sortent à droite avec un angle
+   * Côté droite : traits qui sortent à gauche avec un angle
+   *
+   * On utilise des pseudo-éléments ::after sur les ko-match.
+   * - ko-match impair (1, 3, 5, 7) = haut de la paire :
+   *   trait qui descend depuis son milieu vers le centre de la paire
+   * - ko-match pair (2, 4, 6, 8) = bas de la paire :
+   *   trait qui monte depuis son milieu vers le centre de la paire
+   * ========================================================= */
+
+  /* Plus de gap entre paires (3-4, 5-6, 7-8) pour aérer le visuel */
+  .bracket-grid [data-role="focus"] .ko-match:nth-child(odd):not(:first-child) {
+    margin-top: 12px;
+  }
+
+  /* Couleur partagée par toutes les lignes */
+  .bracket-grid [data-role="focus"] .ko-match::after {
+    border-color: var(--border-strong);
+  }
+
+  /* ===== Côté GAUCHE : connecteurs à droite ===== */
+  .bracket-grid [data-role="focus"][data-side="left"] .ko-match:nth-child(odd)::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    width: 10px;
+    height: calc(50% + 7px);
+    border-top: 1.5px solid var(--border-strong);
+    border-right: 1.5px solid var(--border-strong);
+    border-top-right-radius: 5px;
+    pointer-events: none;
+  }
+  .bracket-grid [data-role="focus"][data-side="left"] .ko-match:nth-child(even)::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    bottom: 50%;
+    width: 10px;
+    height: calc(50% + 7px);
+    border-bottom: 1.5px solid var(--border-strong);
+    border-right: 1.5px solid var(--border-strong);
+    border-bottom-right-radius: 5px;
+    pointer-events: none;
+  }
+
+  /* ===== Côté DROIT : connecteurs à gauche (miroir) ===== */
+  .bracket-grid [data-role="focus"][data-side="right"] .ko-match:nth-child(odd)::after {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    width: 10px;
+    height: calc(50% + 7px);
+    border-top: 1.5px solid var(--border-strong);
+    border-left: 1.5px solid var(--border-strong);
+    border-top-left-radius: 5px;
+    pointer-events: none;
+  }
+  .bracket-grid [data-role="focus"][data-side="right"] .ko-match:nth-child(even)::after {
+    content: '';
+    position: absolute;
+    left: -10px;
+    bottom: 50%;
+    width: 10px;
+    height: calc(50% + 7px);
+    border-bottom: 1.5px solid var(--border-strong);
+    border-left: 1.5px solid var(--border-strong);
+    border-bottom-left-radius: 5px;
+    pointer-events: none;
+  }
+
+  /* Côté gauche : décaler la colonne vers la gauche pour laisser place aux traits */
+  .bracket-grid [data-role="focus"][data-side="left"] {
+    padding-right: 10px;
+  }
+  .bracket-grid [data-role="focus"][data-side="right"] {
+    padding-left: 10px;
   }
 
   /* Détails secondaires plus discrets (date, stade) */

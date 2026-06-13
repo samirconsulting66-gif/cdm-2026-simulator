@@ -182,6 +182,7 @@ function BracketCol({
   provisional,
   round,
   role,
+  side,
 }: {
   title: string;
   count: number;
@@ -190,9 +191,10 @@ function BracketCol({
   provisional: boolean;
   round: number;
   role: ColRole;
+  side: 'left' | 'right';
 }) {
   return (
-    <div className="bracket-col-wrap" data-round={round} data-role={role}>
+    <div className="bracket-col-wrap" data-round={round} data-role={role} data-side={side}>
       <div className="bracket-col-title">
         <span>{title}</span>
         <span className="bracket-col-count">{count}</span>
@@ -352,10 +354,10 @@ export function BracketPage() {
 
       <div className="bracket-scroll">
         <div className={`bracket-grid zoom-${zoom}`}>
-          <BracketCol round={1} role={roleFor(1)} title={t.phases.r32} count={8} ids={R32_LEFT_IDS} spacing={1} provisional={provisional} />
-          <BracketCol round={2} role={roleFor(2)} title={t.phases.r16} count={4} ids={R16_LEFT_IDS} spacing={2} provisional={provisional} />
-          <BracketCol round={3} role={roleFor(3)} title={t.phases.qf}  count={2} ids={QF_LEFT_IDS}  spacing={3} provisional={provisional} />
-          <BracketCol round={4} role={roleFor(4)} title={t.phases.sf}  count={1} ids={['M101']}     spacing={4} provisional={provisional} />
+          <BracketCol round={1} role={roleFor(1)} side="left" title={t.phases.r32} count={8} ids={R32_LEFT_IDS} spacing={1} provisional={provisional} />
+          <BracketCol round={2} role={roleFor(2)} side="left" title={t.phases.r16} count={4} ids={R16_LEFT_IDS} spacing={2} provisional={provisional} />
+          <BracketCol round={3} role={roleFor(3)} side="left" title={t.phases.qf}  count={2} ids={QF_LEFT_IDS}  spacing={3} provisional={provisional} />
+          <BracketCol round={4} role={roleFor(4)} side="left" title={t.phases.sf}  count={1} ids={['M101']}     spacing={4} provisional={provisional} />
 
           <div className="bracket-col-wrap bracket-center-col" data-round={5} data-role={roleFor(5)}>
             <div className="bracket-col-title centered">
@@ -373,10 +375,10 @@ export function BracketPage() {
             </div>
           </div>
 
-          <BracketCol round={4} role={roleFor(4)} title={t.phases.sf}  count={1} ids={['M102']}      spacing={4} provisional={provisional} />
-          <BracketCol round={3} role={roleFor(3)} title={t.phases.qf}  count={2} ids={QF_RIGHT_IDS}  spacing={3} provisional={provisional} />
-          <BracketCol round={2} role={roleFor(2)} title={t.phases.r16} count={4} ids={R16_RIGHT_IDS} spacing={2} provisional={provisional} />
-          <BracketCol round={1} role={roleFor(1)} title={t.phases.r32} count={8} ids={R32_RIGHT_IDS} spacing={1} provisional={provisional} />
+          <BracketCol round={4} role={roleFor(4)} side="right" title={t.phases.sf}  count={1} ids={['M102']}      spacing={4} provisional={provisional} />
+          <BracketCol round={3} role={roleFor(3)} side="right" title={t.phases.qf}  count={2} ids={QF_RIGHT_IDS}  spacing={3} provisional={provisional} />
+          <BracketCol round={2} role={roleFor(2)} side="right" title={t.phases.r16} count={4} ids={R16_RIGHT_IDS} spacing={2} provisional={provisional} />
+          <BracketCol round={1} role={roleFor(1)} side="right" title={t.phases.r32} count={8} ids={R32_RIGHT_IDS} spacing={1} provisional={provisional} />
         </div>
       </div>
 
