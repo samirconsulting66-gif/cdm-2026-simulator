@@ -4251,70 +4251,74 @@ a { color: inherit; text-decoration: none; }
   }
 
   /* =========================================================
-   * Phase Finale mobile — mode "focus + voisins faded"
-   * focus  = tour courant (taille normale)
-   * prev   = tour précédent (mini, opacité réduite)
-   * next   = tour suivant   (mini, opacité réduite)
-   * other  = autres tours (masqués)
+   * Phase Finale mobile — mode FOCUS SEUL
+   * Seul le tour courant est visible, en pleine largeur, lisible.
+   * Navigation via les boutons de zoom (R32 · R16 · QF · SF · Finale).
    * ========================================================= */
-  .bracket-grid [data-role="other"] { display: none; }
-
-  .bracket-grid [data-role="focus"] {
-    opacity: 1;
-  }
-
   .bracket-grid [data-role="prev"],
-  .bracket-grid [data-role="next"] {
-    opacity: 0.5;
-  }
-
-  /* Cartes mini dans les voisins (prev/next) */
-  .bracket-grid [data-role="prev"] .ko-match,
-  .bracket-grid [data-role="next"] .ko-match {
-    padding: 4px 5px;
-    font-size: 10px;
-    gap: 3px;
-  }
-  .bracket-grid [data-role="prev"] .ko-team,
-  .bracket-grid [data-role="next"] .ko-team {
-    padding: 3px 5px;
-    font-size: 10.5px;
-    gap: 4px;
-  }
-  .bracket-grid [data-role="prev"] .ko-team .team-mini-flag,
-  .bracket-grid [data-role="next"] .ko-team .team-mini-flag {
-    width: 14px;
-    height: 9px;
-  }
-  .bracket-grid [data-role="prev"] .ko-score-input,
-  .bracket-grid [data-role="next"] .ko-score-input {
-    width: 22px;
-    padding: 1px 0;
-    font-size: 10.5px;
-    pointer-events: none;
-  }
-
-  /* Masquer les détails superflus dans les voisins */
-  .bracket-grid [data-role="prev"] .ko-match-meta,
-  .bracket-grid [data-role="next"] .ko-match-meta,
-  .bracket-grid [data-role="prev"] .ko-match-foot,
-  .bracket-grid [data-role="next"] .ko-match-foot,
-  .bracket-grid [data-role="prev"] .ko-pen-row,
-  .bracket-grid [data-role="next"] .ko-pen-row,
-  .bracket-grid [data-role="prev"] .bracket-col-count,
-  .bracket-grid [data-role="next"] .bracket-col-count {
+  .bracket-grid [data-role="next"],
+  .bracket-grid [data-role="other"] {
     display: none;
   }
 
-  /* Titres de colonnes prev/next plus petits */
-  .bracket-grid [data-role="prev"] .bracket-col-title,
-  .bracket-grid [data-role="next"] .bracket-col-title {
-    font-size: 10px;
-    padding: 4px 4px 6px;
+  /* La grille devient un simple bloc vertical ; plus de miroir gauche/droite */
+  .bracket-grid {
+    display: block;
+    min-width: 0;
+    width: 100%;
   }
 
-  /* Sur mobile en mode focus, le scale-down naturel des cartes annule le besoin
-     d'agrandissement du zoom-0 desktop. On laisse les autres règles mobile. */
+  .bracket-scroll {
+    overflow-x: visible;
+    padding-bottom: 0;
+  }
+
+  /* Quand round=1 (R32), round=2 (R16), round=3 (QF), round=4 (SF) sont focus :
+     les deux moitiés (data-round=N) du bracket s'empilent verticalement. */
+  .bracket-grid [data-role="focus"] {
+    display: block;
+    opacity: 1;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 18px;
+  }
+
+  /* Annuler les espacements verticaux desktop (spaced-N) qui étaient là pour
+     aligner visuellement avec le tour adjacent — inutile sans miroir. */
+  .bracket-grid .bracket-col.spaced-1,
+  .bracket-grid .bracket-col.spaced-2,
+  .bracket-grid .bracket-col.spaced-3,
+  .bracket-grid .bracket-col.spaced-4 {
+    padding-top: 0;
+    gap: 10px;
+  }
+
+  /* Centre (Final + 3e place) en mode focus : layout vertical centré */
+  .bracket-grid .bracket-center-col[data-role="focus"] .bracket-center {
+    padding-top: 0;
+    gap: 18px;
+  }
+
+  /* Cartes du focus en taille confortable pour mobile */
+  .bracket-grid [data-role="focus"] .ko-match {
+    padding: 9px 11px;
+    font-size: 12.5px;
+    gap: 6px;
+  }
+  .bracket-grid [data-role="focus"] .ko-team {
+    padding: 7px 10px;
+    font-size: 13px;
+    gap: 8px;
+  }
+  .bracket-grid [data-role="focus"] .ko-team .team-mini-flag {
+    width: 22px;
+    height: 15px;
+  }
+  .bracket-grid [data-role="focus"] .ko-score-input {
+    width: 34px;
+    padding: 5px 0;
+    font-size: 14px;
+  }
 }
 
 /* =========================================================
