@@ -4205,12 +4205,21 @@ a { color: inherit; text-decoration: none; }
     min-width: max-content;
   }
 
-  /* Tableaux scrollables (Classement, FIFA, Paramètre) */
-  .standing-table-wrap,
-  .fifa-table-wrap,
-  .teams-table-wrap {
+  /* Tableaux scrollables (Classement, FIFA, Paramètre).
+     Le .teams-table-card a overflow: hidden par défaut (pour le border-radius)
+     qui masquait les colonnes Force/Participations/Host sur mobile. On force
+     overflow-x: auto pour permettre le swipe horizontal. */
+  .teams-table-card,
+  .fifa-table-card,
+  .standings-grid {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+  }
+
+  /* Les tableaux ne se contractent pas en dessous de leur contenu */
+  .teams-table,
+  .fifa-table {
+    min-width: max-content;
   }
 
   /* Réduire le padding latéral global du main : sur mobile, 24 px de chaque
