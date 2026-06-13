@@ -4178,28 +4178,20 @@ a { color: inherit; text-decoration: none; }
     overflow-y: auto;
   }
 
-  /* Tabs scrollables horizontalement */
+  /* Tabs : wrap automatique sur plusieurs lignes plutôt que scroll horizontal.
+     Tous les onglets visibles d'un coup d'œil, centrés sous les actions. */
   .tabs {
-    overflow-x: auto;
-    overflow-y: hidden;
-    flex-wrap: nowrap;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
+    flex-wrap: wrap;
+    justify-content: center;
     padding: 6px 0 4px;
     margin-top: 3px;
-    gap: 16px;
+    gap: 6px 18px;
     font-size: 13.5px;
   }
 
   .tab {
-    padding: 8px 2px;
+    padding: 6px 4px;
     font-size: 13.5px;
-  }
-
-  .tabs::-webkit-scrollbar { height: 3px; }
-  .tabs::-webkit-scrollbar-thumb {
-    background: var(--border-strong);
-    border-radius: 2px;
   }
 
   /* Bracket scrollable horizontalement (au lieu d'écraser les colonnes) */
@@ -4261,9 +4253,9 @@ a { color: inherit; text-decoration: none; }
     font-size: 12.5px;
   }
 
-  /* Tabs : restent confortables */
-  .tabs { gap: 13px; font-size: 13px; }
-  .tab { padding: 7px 2px; font-size: 13px; }
+  /* Tabs : restent confortables, wrap conservé */
+  .tabs { gap: 5px 14px; font-size: 13px; }
+  .tab { padding: 5px 3px; font-size: 13px; }
 
   .brand { font-size: 14px; }
 }
