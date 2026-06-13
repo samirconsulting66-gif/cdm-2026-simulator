@@ -4213,20 +4213,16 @@ a { color: inherit; text-decoration: none; }
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Page Matchs : padding réduit */
-  .matches-page,
-  .standings-page,
-  .bracket-page,
-  .teams-page,
-  .fifa-page {
-    padding-left: 6px;
-    padding-right: 6px;
+  /* Réduire le padding latéral global du main : sur mobile, 24 px de chaque
+     côté = 48 px perdus sur une viewport de 360 px (13 % de la largeur !).
+     On passe à 4 px pour gagner ~40 px utiles pour le contenu. */
+  .app-main {
+    padding: 12px 4px 32px;
   }
 
-  /* Pour la Phase Finale, encore plus serré pour gagner de la largeur */
-  .bracket-page {
-    padding-left: 4px;
-    padding-right: 4px;
+  /* Cartes Matchs : padding interne plus serré sur mobile */
+  .match-card {
+    padding: 10px 10px;
   }
 
   /* Cartes match : permettre aux noms d'équipes longs de wrapper sur 2 lignes
