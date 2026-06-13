@@ -172,21 +172,27 @@ function KoMatchCard({ matchId, extraClass, provisional }: { matchId: string; ex
   );
 }
 
+type ColRole = 'focus' | 'prev' | 'next' | 'other';
+
 function BracketCol({
   title,
   count,
   ids,
   spacing,
   provisional,
+  round,
+  role,
 }: {
   title: string;
   count: number;
   ids: string[];
   spacing: 1|2|3|4;
   provisional: boolean;
+  round: number;
+  role: ColRole;
 }) {
   return (
-    <div className="bracket-col-wrap">
+    <div className="bracket-col-wrap" data-round={round} data-role={role}>
       <div className="bracket-col-title">
         <span>{title}</span>
         <span className="bracket-col-count">{count}</span>
@@ -227,10 +233,16 @@ export function BracketPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [zoom]);
 
-  const showR32 = zoom < 1;
-  const showR16 = zoom < 2;
-  const showQF  = zoom < 3;
-  const showSF  = zoom < 4;
+  // Mapping zoom → tour focus (1=R32, 2=R16, 3=QF, 4=SF, 5=Final)
+  // Détermine le rôle de chaque colonne (focus / prev / next / other)
+  // utilisé en CSS pour styler différemment selon mobile/desktop.
+  const focusRound = zoom + 1;
+  const roleFor = (round: number): ColRole => {
+    if (round === focusRound) return 'focus';
+    if (round === focusRound - 1) return 'prev';
+    if (round === focusRound + 1) return 'next';
+    return 'other';
+  };
 
   const ZOOM_BUTTONS: { level: ZoomLevel; label: string; icon: string }[] = [
     { level: 0, label: t.bracket.overview, icon: '⊕' },
@@ -340,12 +352,12 @@ export function BracketPage() {
 
       <div className="bracket-scroll">
         <div className={`bracket-grid zoom-${zoom}`}>
-          {showR32 && <BracketCol title={t.phases.r32} count={8} ids={R32_LEFT_IDS} spacing={1} provisional={provisional} />}
-          {showR16 && <BracketCol title={t.phases.r16} count={4} ids={R16_LEFT_IDS} spacing={2} provisional={provisional} />}
-          {showQF  && <BracketCol title={t.phases.qf}  count={2} ids={QF_LEFT_IDS}  spacing={3} provisional={provisional} />}
-          {showSF  && <BracketCol title={t.phases.sf}  count={1} ids={['M101']}     spacing={4} provisional={provisional} />}
+          <BracketCol round={1} role={roleFor(1)} title={t.phases.r32} count={8} ids={R32_LEFT_IDS} spacing={1} provisional={provisional} />
+          <BracketCol round={2} role={roleFor(2)} title={t.phases.r16} count={4} ids={R16_LEFT_IDS} spacing={2} provisional={provisional} />
+          <BracketCol round={3} role={roleFor(3)} title={t.phases.qf}  count={2} ids={QF_LEFT_IDS}  spacing={3} provisional={provisional} />
+          <BracketCol round={4} role={roleFor(4)} title={t.phases.sf}  count={1} ids={['M101']}     spacing={4} provisional={provisional} />
 
-          <div className="bracket-col-wrap bracket-center-col">
+          <div className="bracket-col-wrap bracket-center-col" data-round={5} data-role={roleFor(5)}>
             <div className="bracket-col-title centered">
               <span>{t.phases.final}</span>
             </div>
@@ -361,10 +373,10 @@ export function BracketPage() {
             </div>
           </div>
 
-          {showSF  && <BracketCol title={t.phases.sf}  count={1} ids={['M102']}      spacing={4} provisional={provisional} />}
-          {showQF  && <BracketCol title={t.phases.qf}  count={2} ids={QF_RIGHT_IDS}  spacing={3} provisional={provisional} />}
-          {showR16 && <BracketCol title={t.phases.r16} count={4} ids={R16_RIGHT_IDS} spacing={2} provisional={provisional} />}
-          {showR32 && <BracketCol title={t.phases.r32} count={8} ids={R32_RIGHT_IDS} spacing={1} provisional={provisional} />}
+          <BracketCol round={4} role={roleFor(4)} title={t.phases.sf}  count={1} ids={['M102']}      spacing={4} provisional={provisional} />
+          <BracketCol round={3} role={roleFor(3)} title={t.phases.qf}  count={2} ids={QF_RIGHT_IDS}  spacing={3} provisional={provisional} />
+          <BracketCol round={2} role={roleFor(2)} title={t.phases.r16} count={4} ids={R16_RIGHT_IDS} spacing={2} provisional={provisional} />
+          <BracketCol round={1} role={roleFor(1)} title={t.phases.r32} count={8} ids={R32_RIGHT_IDS} spacing={1} provisional={provisional} />
         </div>
       </div>
 

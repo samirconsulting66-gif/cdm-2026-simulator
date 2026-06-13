@@ -4249,6 +4249,90 @@ a { color: inherit; text-decoration: none; }
     width: 28px;
     height: 19px;
   }
+
+  /* =========================================================
+   * Phase Finale mobile — mode "focus + voisins faded"
+   * focus  = tour courant (taille normale)
+   * prev   = tour précédent (mini, opacité réduite)
+   * next   = tour suivant   (mini, opacité réduite)
+   * other  = autres tours (masqués)
+   * ========================================================= */
+  .bracket-grid [data-role="other"] { display: none; }
+
+  .bracket-grid [data-role="focus"] {
+    opacity: 1;
+  }
+
+  .bracket-grid [data-role="prev"],
+  .bracket-grid [data-role="next"] {
+    opacity: 0.5;
+  }
+
+  /* Cartes mini dans les voisins (prev/next) */
+  .bracket-grid [data-role="prev"] .ko-match,
+  .bracket-grid [data-role="next"] .ko-match {
+    padding: 4px 5px;
+    font-size: 10px;
+    gap: 3px;
+  }
+  .bracket-grid [data-role="prev"] .ko-team,
+  .bracket-grid [data-role="next"] .ko-team {
+    padding: 3px 5px;
+    font-size: 10.5px;
+    gap: 4px;
+  }
+  .bracket-grid [data-role="prev"] .ko-team .team-mini-flag,
+  .bracket-grid [data-role="next"] .ko-team .team-mini-flag {
+    width: 14px;
+    height: 9px;
+  }
+  .bracket-grid [data-role="prev"] .ko-score-input,
+  .bracket-grid [data-role="next"] .ko-score-input {
+    width: 22px;
+    padding: 1px 0;
+    font-size: 10.5px;
+    pointer-events: none;
+  }
+
+  /* Masquer les détails superflus dans les voisins */
+  .bracket-grid [data-role="prev"] .ko-match-meta,
+  .bracket-grid [data-role="next"] .ko-match-meta,
+  .bracket-grid [data-role="prev"] .ko-match-foot,
+  .bracket-grid [data-role="next"] .ko-match-foot,
+  .bracket-grid [data-role="prev"] .ko-pen-row,
+  .bracket-grid [data-role="next"] .ko-pen-row,
+  .bracket-grid [data-role="prev"] .bracket-col-count,
+  .bracket-grid [data-role="next"] .bracket-col-count {
+    display: none;
+  }
+
+  /* Titres de colonnes prev/next plus petits */
+  .bracket-grid [data-role="prev"] .bracket-col-title,
+  .bracket-grid [data-role="next"] .bracket-col-title {
+    font-size: 10px;
+    padding: 4px 4px 6px;
+  }
+
+  /* Sur mobile en mode focus, le scale-down naturel des cartes annule le besoin
+     d'agrandissement du zoom-0 desktop. On laisse les autres règles mobile. */
+}
+
+/* =========================================================
+ * Phase Finale DESKTOP — comportement original préservé
+ * On masque tout round inférieur au focus.
+ * (Sur desktop, on n'utilise pas la sémantique prev/next/other.)
+ * ========================================================= */
+@media (min-width: 769px) {
+  .bracket-grid.zoom-1 [data-round="1"] { display: none; }
+  .bracket-grid.zoom-2 [data-round="1"],
+  .bracket-grid.zoom-2 [data-round="2"] { display: none; }
+  .bracket-grid.zoom-3 [data-round="1"],
+  .bracket-grid.zoom-3 [data-round="2"],
+  .bracket-grid.zoom-3 [data-round="3"] { display: none; }
+  .bracket-grid.zoom-4 [data-round="1"],
+  .bracket-grid.zoom-4 [data-round="2"],
+  .bracket-grid.zoom-4 [data-round="3"],
+  .bracket-grid.zoom-4 [data-round="4"] { display: none; }
 }
 
 /* Très petit écran : compactage des boutons mais en gardant la lisibilité */
