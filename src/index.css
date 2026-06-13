@@ -4219,8 +4219,14 @@ a { color: inherit; text-decoration: none; }
   .bracket-page,
   .teams-page,
   .fifa-page {
-    padding-left: 8px;
-    padding-right: 8px;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  /* Pour la Phase Finale, encore plus serré pour gagner de la largeur */
+  .bracket-page {
+    padding-left: 4px;
+    padding-right: 4px;
   }
 
   /* Cartes match : permettre aux noms d'équipes longs de wrapper sur 2 lignes
@@ -4273,7 +4279,7 @@ a { color: inherit; text-decoration: none; }
   .bracket-grid.zoom-4 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px 10px;
+    gap: 6px 4px;
     min-width: 0;
     width: 100%;
     justify-content: stretch;
@@ -4473,10 +4479,20 @@ a { color: inherit; text-decoration: none; }
 
   /* Côté gauche : décaler la colonne vers la gauche pour laisser place aux traits */
   .bracket-grid [data-role="focus"][data-side="left"] {
-    padding-right: 10px;
+    padding-right: 8px;
   }
   .bracket-grid [data-role="focus"][data-side="right"] {
-    padding-left: 10px;
+    padding-left: 8px;
+  }
+
+  /* Demi-finales (round=4) : 1 match par colonne → pas de paire, donc pas
+     de connecteurs ni de gap supplémentaire entre cartes. */
+  .bracket-grid [data-role="focus"][data-round="4"] .ko-match::after,
+  .bracket-grid [data-role="focus"][data-round="4"] .ko-match::before {
+    display: none;
+  }
+  .bracket-grid [data-role="focus"][data-round="4"] .ko-match:nth-child(odd):not(:first-child) {
+    margin-top: 0;
   }
 
   /* Détails secondaires plus discrets (date, stade) */
