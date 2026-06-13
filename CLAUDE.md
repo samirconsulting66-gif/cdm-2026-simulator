@@ -73,7 +73,9 @@ src/
 - **α (simFactor)** : 0.2 (Chaos) / 0.6 (Surprenant) / **1.0 (Standard)** / 1.5 (Marqué) / 2.0 (Strict).
 - **TAB** : prob = 0.5 ± α × diff × 0.005, clampée [0.35, 0.65].
 - **ELO interne** : K-factor variable (30 groupes → 60 finale), formule classique `R + K·G·(S−E)` avec base 400.
-- **Points FIFA (SUM officielle FIFA Coca-Cola Ranking)** : `P + I·(W−We)`, base 600, `I = 50` pour TOUS les matchs de la phase finale CdM (règlement FIFA strict), W = 0.75/0.5 sur TAB. L'écart de buts n'influence PAS le delta de points FIFA.
+- **Points FIFA (SUM officielle FIFA Coca-Cola Ranking)** : `P + I·(W−We)`, base 600, W = 0.75/0.5 sur TAB. L'écart de buts n'influence PAS le delta. Coefficients I officiels CdM 2026 :
+  - Groupes / Seizièmes (R32) / Huitièmes (R16) : **50**
+  - Quarts / Demi-finales / 3e place / Finale : **60**
 - **Bracket progressif** : `resolveBracket` se lance dès le 1ᵉʳ score, les seeds 1A/2A/3-ABCDF se remplissent en temps réel selon le classement courant.
 - **Matching des 8 meilleurs 3ᵉˢ** : **tableau FIFA officiel** (`src/data/fifaThirdPlaceTable.ts`, 495 entrées extraites de FWC26_regulations_EN.pdf pages 80-97). Pour chaque combinaison de 8 groupes qualifiés, le tableau donne le mapping exact slot → groupe. Fallback en backtracking bipartite si la combinaison n'est pas trouvée (sécurité).
 

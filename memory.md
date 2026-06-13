@@ -21,7 +21,7 @@ Notes de travail et décisions importantes prises au fil des sessions.
 1. **i18n custom** (pas de react-i18next) — context + dictionnaire flat. Moins lourd.
 2. **9 langues** : fr (défaut), en, es, ar (RTL), de, pt, zh, ja, ko.
 3. **Heure source = Alger GMT+1** car c'est ce que donne le dossier officiel. Picker convertit en 19 fuseaux.
-4. **ELO et Points FIFA séparés** — formules différentes (base 400 vs 600, K-factor vs I-factor). ELO = système maison (K=30 groupes → 60 finale) ; FIFA SUM = formule officielle FIFA Coca-Cola Ranking, **I = 50 partout sur la CdM** (règlement strict, ne dépend pas du tour). L'écart de buts n'influence pas le delta FIFA (4-1 = 1-0).
+4. **ELO et Points FIFA séparés** — formules différentes (base 400 vs 600, K-factor vs I-factor). ELO = système maison (K=30 groupes → 60 finale) ; FIFA SUM = formule officielle FIFA Coca-Cola Ranking. **Coefficients I CdM 2026** : Groupes/R32/R16 = 50 ; Quarts/SF/3e/Finale = 60. L'écart de buts n'influence pas le delta FIFA (4-1 = 1-0).
 5. **Simulation pondérée par Force + α** plutôt que par classement FIFA (Force = donnée officielle du dossier).
 6. **Bracket progressif** dès 1 match joué (pas d'attente fin de phase de groupes).
 7. **Best-thirds** : tableau FIFA officiel (Annexe FWC26 pages 80-97, 495 combinaisons extraites en JSON puis converties en TS dans `src/data/fifaThirdPlaceTable.ts`). Pour chaque combi de 8 groupes qualifiés, mapping exact slot → groupe. Fallback en backtracking bipartite si combi non trouvée.

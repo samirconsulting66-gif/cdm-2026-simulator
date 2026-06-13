@@ -55,10 +55,20 @@ function kFactorForRound(round: KnockoutMatch['round'] | 'GROUP'): number {
 }
 
 // I-factor officiel FIFA (Coca-Cola Ranking) — formule SUM.
-// Règlement FIFA strict : I = 50 pour TOUS les matchs de la phase finale
-// de la Coupe du Monde (groupes, 16e, 8e, quarts, demis, 3e place, finale).
-function iFactorForRound(_round: KnockoutMatch['round'] | 'GROUP'): number {
-  return 50;
+// Règlement FIFA pour la CdM 2026 :
+//   Groupes / Seizièmes / Huitièmes              → I = 50
+//   Quarts / Demi-finales / 3e place / Finale    → I = 60
+// (Seizièmes R32 nouveaux en 2026, alignés sur les huitièmes : I = 50.)
+function iFactorForRound(round: KnockoutMatch['round'] | 'GROUP'): number {
+  switch (round) {
+    case 'GROUP': return 50;
+    case 'R32':   return 50;
+    case 'R16':   return 50;
+    case 'QF':    return 60;
+    case 'SF':    return 60;
+    case 'THIRD': return 60;
+    case 'FINAL': return 60;
+  }
 }
 
 // Score attendu FIFA — base 600 (et non 400 comme le ELO classique)
