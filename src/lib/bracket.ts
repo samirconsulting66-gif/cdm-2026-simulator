@@ -4,6 +4,11 @@ import {
   thirdPlacedRanking,
 } from './standings';
 import { BRACKET_SLOTS } from '../data/bracket';
+import {
+  FIFA_THIRD_PLACE_TABLE,
+  MATCH_TO_FIFA_SLOT,
+  type SlotKey,
+} from '../data/fifaThirdPlaceTable';
 
 const R32_THIRD_SLOTS_ORDER = [
   'M74', 'M77', 'M79', 'M80', 'M81', 'M82', 'M85', 'M87',
@@ -17,14 +22,48 @@ function getThirdSlotSeedKey(matchId: string): string | null {
   return slot.awaySeed.startsWith('3') ? slot.awaySeed : slot.homeSeed;
 }
 
-// Appariement bijectif des 8 meilleurs 3ᵉˢ vers les 8 slots, en respectant
-// la liste des groupes autorisés dans chaque seed `3XXXXXX`. Backtracking
-// dans l'ordre de classement : le meilleur 3ᵉ choisit en premier un slot
-// autorisé, etc. Retourne un mapping slotIndex -> teamId, ou null si aucun
-// appariement valide n'existe (théoriquement impossible avec le tableau FIFA).
+// Appariement bijectif des 8 meilleurs 3ᵉˢ vers les 8 slots.
+//
+// Stratégie principale : lookup dans le tableau FIFA officiel
+// (FIFA_THIRD_PLACE_TABLE, 495 combinaisons) qui donne pour chaque ensemble
+// de 8 groupes qualifiés le mapping exact slot → groupe.
+//
+// Fallback : backtracking bipartite si pour une raison ou une autre la combi
+// n'est pas trouvée (sécurité — ne devrait jamais arriver avec un classement
+// valide). Le backtracking respecte les contraintes des seeds 3XXXXXX.
 function assignThirdsToSlots(
   thirds: { teamId: string; group: GroupLetter }[],
 ): Record<number, string> | null {
+  // --- Tentative 1 : tableau FIFA officiel ---
+  if (thirds.length === 8) {
+    const groups = thirds.map(t => t.group);
+    const distinct = new Set(groups);
+    if (distinct.size === 8) {
+      const comboKey = [...groups].sort().join('');
+      const mapping = FIFA_THIRD_PLACE_TABLE[comboKey];
+      if (mapping) {
+        // Index inverse : pour chaque slot FIFA, on cherche le 3e du groupe
+        // attribué dans la liste de 3es.
+        const thirdByGroup: Record<string, string> = {};
+        for (const t of thirds) thirdByGroup[t.group] = t.teamId;
+
+        const result: Record<number, string> = {};
+        let ok = true;
+        for (let i = 0; i < R32_THIRD_SLOTS_ORDER.length; i++) {
+          const matchId = R32_THIRD_SLOTS_ORDER[i];
+          const fifaSlot: SlotKey | undefined = MATCH_TO_FIFA_SLOT[matchId];
+          if (!fifaSlot) { ok = false; break; }
+          const groupLetter = mapping[fifaSlot];
+          const teamId = thirdByGroup[groupLetter];
+          if (!teamId) { ok = false; break; }
+          result[i] = teamId;
+        }
+        if (ok) return result;
+      }
+    }
+  }
+
+  // --- Tentative 2 (fallback) : backtracking bipartite ---
   const allowed: Set<string>[] = R32_THIRD_SLOTS_ORDER.map(matchId => {
     const seedKey = getThirdSlotSeedKey(matchId);
     if (!seedKey) return new Set<string>();

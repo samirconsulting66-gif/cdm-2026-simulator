@@ -24,7 +24,7 @@ Notes de travail et décisions importantes prises au fil des sessions.
 4. **ELO et Points FIFA séparés** — formules différentes (base 400 vs 600, K-factor vs I-factor).
 5. **Simulation pondérée par Force + α** plutôt que par classement FIFA (Force = donnée officielle du dossier).
 6. **Bracket progressif** dès 1 match joué (pas d'attente fin de phase de groupes).
-7. **Best-thirds** : matching bipartite par backtracking — chaque slot `3XXXXXX` ne reçoit qu'un 3ᵉ dont la lettre de groupe est listée. Garantit qu'un 1ᵉʳ ne croise jamais un 3ᵉ de son propre groupe en R32/R16.
+7. **Best-thirds** : tableau FIFA officiel (Annexe FWC26 pages 80-97, 495 combinaisons extraites en JSON puis converties en TS dans `src/data/fifaThirdPlaceTable.ts`). Pour chaque combi de 8 groupes qualifiés, mapping exact slot → groupe. Fallback en backtracking bipartite si combi non trouvée.
 8. **CSS global** dans `index.css`, pas de Tailwind/CSS-in-JS — préférence stabilité.
 
 ## Choix UX validés
@@ -48,7 +48,7 @@ Notes de travail et décisions importantes prises au fil des sessions.
 
 ## Choses non faites (TODO si jamais)
 
-- Tableau FIFA officiel d'attribution exacte des 8 meilleures 3<sup>es</sup> aux slots R32 selon la combinaison de groupes qualifiés (annexe FIFA). L'implémentation actuelle (backtracking) respecte les contraintes des seeds mais ne reproduit pas le tableau exact.
+- ~~Tableau FIFA officiel d'attribution exacte des 8 meilleures 3<sup>es</sup>~~ → **implémenté** (495 entrées, extrait du PDF officiel FWC26 pages 80-97).
 - Horaires précis des matchs R16/QF/SF/Finale (les valeurs actuelles sont raisonnables mais non issues du dossier officiel).
 - Audit RTL approfondi pour la version arabe (quelques composants pourraient mal s'aligner).
 - Prochaine maj du classement FIFA prévue ~6 semaines après le 10/06/2026.
