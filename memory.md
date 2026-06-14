@@ -46,9 +46,24 @@ Notes de travail et décisions importantes prises au fil des sessions.
 - Le sandbox refuse certaines actions (un test PowerShell avait échoué pendant une indisponibilité Opus → fallback en réessayant).
 - Quand un commit est attendu, vérifier que le projet est bien un repo git (le scaffold Vite ne fait pas `git init`).
 
+## Résultats officiels (CdM en cours)
+
+- Mécanique de verrouillage dans `src/data/officialResults.ts` (voir `CLAUDE.md > Résultats officiels verrouillés`).
+- Workflow d'update : édition GitHub web → commit → Cloudflare redéploie auto.
+- Liste à jour : 8 premiers matchs (11/06 → 14/06) verrouillés au commit 97e8908.
+
+## Mise en production
+
+- Repo GitHub : `samirconsulting66-gif/cdm-2026-simulator` (toujours nommé cdm- malgré renommage projet en fwc-).
+- Site live : `https://fwc-2026-simulator.pages.dev` (Cloudflare Pages, déploiement auto à chaque push sur main).
+- Build CI : Vite, `npm run build`, output `dist/`. Aucune variable d'environnement.
+- Le 14/06/2026 : projet recréé après un disconnect Cloudflare qui avait basculé en mode "Direct upload" — la connexion Git a dû être refaite proprement.
+
 ## Choses non faites (TODO si jamais)
 
 - ~~Tableau FIFA officiel d'attribution exacte des 8 meilleures 3<sup>es</sup>~~ → **implémenté** (495 entrées, extrait du PDF officiel FWC26 pages 80-97).
 - Horaires précis des matchs R16/QF/SF/Finale (les valeurs actuelles sont raisonnables mais non issues du dossier officiel).
 - Audit RTL approfondi pour la version arabe (quelques composants pourraient mal s'aligner).
 - Prochaine maj du classement FIFA prévue ~6 semaines après le 10/06/2026.
+- Auto-update des résultats officiels via API + GitHub Actions cron (cf. discussion 14/06) — pour le moment manuel.
+- Pages légales (Politique de confidentialité, Mentions légales, Cookies, À propos) — préalable à AdSense.

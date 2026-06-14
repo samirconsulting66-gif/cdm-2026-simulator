@@ -27,6 +27,8 @@ src/
     bracket.ts                    # 32 BRACKET_SLOTS (M73–M104, seeds 1A..3-ABCDF, W74..)
     stadiums.ts                   # 16 stades (id, name, city, country)
     fifaWorldRanking.ts           # Top 100 FIFA officiel — 10 juin 2026
+    fifaThirdPlaceTable.ts        # Tableau FIFA officiel des 3ᵉˢ (495 combinaisons)
+    officialResults.ts            # Scores réels figés (verrouillés, non-éditables)
 
   lib/
     standings.ts                  # computeStandings + best thirds + groupStageProgress
@@ -111,6 +113,14 @@ src/
 
 - **Sauvegarder** (`SavePicker`) : slots nommés en `localStorage` (`cdm2026-save-slots`, max 30). Écrasement par nom avec confirmation. Charger/Supprimer par slot.
 - **Exporter** (`ExportPicker`) : télécharge un JSON versionné (`type: "cdm2026-sim-snapshot"`, `version: 1`) contenant `{ groupMatches, knockout, forceOverrides, simFactor }`. Importer valide le format avant d'écraser l'état courant.
+
+## Résultats officiels verrouillés
+
+- Fichier `src/data/officialResults.ts` contient les scores réels des matchs joués IRL (mis à jour au fur et à mesure de la CdM).
+- `applyOfficialResults(state)` dans `SimulationStore` force ces scores au load (override le localStorage), au reset et après chaque `simulate*()`.
+- `setGroupScore` et `setKoScore` font un early-return si `isOfficialMatch(id)` → édition manuelle impossible.
+- UI : carte match avec classe `is-official`, badge vert **✓ Officiel** en haut à droite, inputs `disabled` mais score lisible (override sur opacity).
+- Mise à jour : éditer `OFFICIAL_GROUP_RESULTS` (ou `OFFICIAL_KO_RESULTS`) directement sur GitHub via `https://github.com/samirconsulting66-gif/cdm-2026-simulator/edit/main/src/data/officialResults.ts` puis commit — Cloudflare redéploie auto.
 
 ## Limitations connues
 
