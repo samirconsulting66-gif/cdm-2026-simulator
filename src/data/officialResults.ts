@@ -23,6 +23,7 @@ export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [
   { id: 'GC-1-12', homeScore: 1, awayScore: 1 }, // Brésil - Maroc (13/06)
   { id: 'GC-1-34', homeScore: 0, awayScore: 1 }, // Haïti - Écosse (14/06) → Écosse 1-0
   { id: 'GD-1-34', homeScore: 2, awayScore: 0 }, // Australie - Turquie (14/06) → Australie 2-0
+  { id: 'GE-1-12', homeScore: 7, awayScore: 1 }, // Allemagne - Curaçao (14/06) → Allemagne 7-1
 ];
 
 export const OFFICIAL_KO_RESULTS: OfficialResult[] = [];
