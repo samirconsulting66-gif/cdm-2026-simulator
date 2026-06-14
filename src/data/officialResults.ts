@@ -21,6 +21,8 @@ export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [
   { id: 'GD-1-12', homeScore: 4, awayScore: 1 }, // États-Unis - Paraguay (13/06)
   { id: 'GB-1-34', homeScore: 1, awayScore: 1 }, // Qatar - Suisse (13/06)
   { id: 'GC-1-12', homeScore: 1, awayScore: 1 }, // Brésil - Maroc (13/06)
+  { id: 'GC-1-34', homeScore: 0, awayScore: 1 }, // Haïti - Écosse (14/06) → Écosse 1-0
+  { id: 'GD-1-34', homeScore: 2, awayScore: 0 }, // Australie - Turquie (14/06) → Australie 2-0
 ];
 
 export const OFFICIAL_KO_RESULTS: OfficialResult[] = [];
