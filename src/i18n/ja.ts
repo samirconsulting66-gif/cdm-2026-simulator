@@ -100,6 +100,8 @@ export const ja: Translations = {
     pen: 'PK',
     stadium: 'スタジアム',
     matchesCount: '試合',
+    official: '公式',
+    officialTitle: '実際の結果がロック中 — 編集もシミュレーションも不可',
   },
   standings: {
     title: '順位表',

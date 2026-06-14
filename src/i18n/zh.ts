@@ -100,6 +100,8 @@ export const zh: Translations = {
     pen: '点球',
     stadium: '体育场',
     matchesCount: '场比赛',
+    official: '官方',
+    officialTitle: '真实结果已锁定 — 无法编辑或模拟',
   },
   standings: {
     title: '积分榜',

@@ -100,6 +100,8 @@ export const ar: Translations = {
     pen: 'ت.ت',
     stadium: 'الملعب',
     matchesCount: 'مباراة',
+    official: 'رسمي',
+    officialTitle: 'نتيجة حقيقية مقفلة — لا يمكن تعديلها أو محاكاتها',
   },
   standings: {
     title: 'الترتيب',

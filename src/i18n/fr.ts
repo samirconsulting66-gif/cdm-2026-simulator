@@ -100,6 +100,8 @@ export const fr: Translations = {
     pen: 'TAB',
     stadium: 'Stade',
     matchesCount: 'matchs',
+    official: 'Officiel',
+    officialTitle: 'Score réel verrouillé — ne peut pas être modifié ni simulé',
   },
   standings: {
     title: 'Classement',

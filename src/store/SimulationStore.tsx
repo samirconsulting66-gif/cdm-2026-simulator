@@ -8,6 +8,35 @@ import { computeStandings } from '../lib/standings';
 import { computeElos } from '../lib/elo';
 import { simulateEverything, simulateGroupsOnly, simulateKnockoutOnly } from '../lib/random';
 import { createSnapshot, type SimSnapshot } from '../lib/snapshot';
+import {
+  OFFICIAL_GROUP_RESULTS,
+  OFFICIAL_KO_RESULTS,
+  isOfficialMatch,
+} from '../data/officialResults';
+import type { GroupMatch as GM, KnockoutMatch as KM } from '../types';
+
+// Force les scores officiels sur les matchs concernés.
+// Appliqué au démarrage (même si localStorage existe) et après chaque
+// reset/simulation pour s'assurer que ces matchs ne changent jamais.
+function applyOfficialResults(state: SimState): SimState {
+  const groupMatches: GM[] = state.groupMatches.map(m => {
+    const o = OFFICIAL_GROUP_RESULTS.find(r => r.id === m.id);
+    if (!o) return m;
+    return { ...m, homeScore: o.homeScore, awayScore: o.awayScore };
+  });
+  const knockout: KM[] = state.knockout.map(m => {
+    const o = OFFICIAL_KO_RESULTS.find(r => r.id === m.id);
+    if (!o) return m;
+    return {
+      ...m,
+      homeScore: o.homeScore,
+      awayScore: o.awayScore,
+      homePen: o.homePen ?? null,
+      awayPen: o.awayPen ?? null,
+    };
+  });
+  return { groupMatches, knockout };
+}
 
 const LS_KEY = 'cdm2026-sim-v6';
 const FORCE_LS_KEY = 'cdm2026-forces';
@@ -56,19 +85,24 @@ interface SimContextValue extends SimState {
 const SimContext = createContext<SimContextValue | null>(null);
 
 function loadInitial(): SimState {
+  let base: SimState | null = null;
   try {
     const raw = localStorage.getItem(LS_KEY);
     if (raw) {
       const parsed = JSON.parse(raw) as SimState;
-      if (parsed.groupMatches && parsed.knockout) return parsed;
+      if (parsed.groupMatches && parsed.knockout) base = parsed;
     }
   } catch {
     // ignore
   }
-  return {
-    groupMatches: buildInitialGroupMatches(),
-    knockout: buildInitialBracket(),
-  };
+  if (!base) {
+    base = {
+      groupMatches: buildInitialGroupMatches(),
+      knockout: buildInitialBracket(),
+    };
+  }
+  // Force les résultats officiels même si localStorage contenait d'autres scores
+  return applyOfficialResults(base);
 }
 
 function loadForceOverrides(): Record<string, number> {
@@ -127,6 +161,7 @@ export function SimulationProvider({ children }: { children: ReactNode }) {
   );
 
   const setGroupScore: SimContextValue['setGroupScore'] = (id, home, away) => {
+    if (isOfficialMatch(id)) return; // verrouillé
     setState(prev => {
       const groupMatches = prev.groupMatches.map(m =>
         m.id === id ? { ...m, homeScore: home, awayScore: away } : m
@@ -137,6 +172,7 @@ export function SimulationProvider({ children }: { children: ReactNode }) {
   };
 
   const setKoScore: SimContextValue['setKoScore'] = (id, home, away, homePen = null, awayPen = null) => {
+    if (isOfficialMatch(id)) return; // verrouillé
     setState(prev => {
       let knockout = prev.knockout.map(m =>
         m.id === id ? { ...m, homeScore: home, awayScore: away, homePen, awayPen } : m
@@ -147,23 +183,23 @@ export function SimulationProvider({ children }: { children: ReactNode }) {
   };
 
   const reset = () => {
-    setState({
+    setState(applyOfficialResults({
       groupMatches: buildInitialGroupMatches(),
       knockout: buildInitialBracket(),
-    });
+    }));
     setForceOverrides({});
   };
 
   const simulate = () => {
-    setState(simulateEverything(forceOverrides, simFactor));
+    setState(applyOfficialResults(simulateEverything(forceOverrides, simFactor)));
   };
 
   const simulateGroups = () => {
-    setState(simulateGroupsOnly(forceOverrides, simFactor));
+    setState(applyOfficialResults(simulateGroupsOnly(forceOverrides, simFactor)));
   };
 
   const simulateBracket = () => {
-    setState(prev => simulateKnockoutOnly(prev.groupMatches, forceOverrides, simFactor));
+    setState(prev => applyOfficialResults(simulateKnockoutOnly(prev.groupMatches, forceOverrides, simFactor)));
   };
 
   const setForce = (teamId: string, force: number) => {

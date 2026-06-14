@@ -6,6 +6,7 @@ import { GROUP_LETTERS } from '../data/groups';
 import { Flag } from '../components/Flag';
 import { FilterDropdown } from '../components/FilterDropdown';
 import { areAllGroupsComplete } from '../lib/standings';
+import { isOfficialMatch } from '../data/officialResults';
 import { useT, format } from '../i18n';
 import type { GroupMatch, KnockoutMatch } from '../types';
 
@@ -88,6 +89,8 @@ function MatchCard({ m, provisional }: { m: UnifiedMatch; provisional?: boolean 
   const home = m.homeId ? TEAMS_BY_ID[m.homeId] : null;
   const away = m.awayId ? TEAMS_BY_ID[m.awayId] : null;
 
+  const isOfficial = isOfficialMatch(m.id);
+
   const isKoTie = m.kind === 'ko'
     && m.homeScore !== null && m.awayScore !== null
     && m.homeScore === m.awayScore;
@@ -106,10 +109,18 @@ function MatchCard({ m, provisional }: { m: UnifiedMatch; provisional?: boolean 
   };
 
   return (
-    <article className={`match-card ${showProvBadge ? 'is-provisional' : ''}`}>
+    <article className={`match-card ${showProvBadge ? 'is-provisional' : ''} ${isOfficial ? 'is-official' : ''}`}>
       {showProvBadge && (
         <span className="match-prov-badge">
           {t.bracket.provisional}
+        </span>
+      )}
+      {isOfficial && (
+        <span className="match-official-badge" title={t.matches.officialTitle}>
+          <svg width="10" height="10" viewBox="0 0 14 14" fill="none" aria-hidden>
+            <path d="M2 7 L6 11 L12 3" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          {t.matches.official}
         </span>
       )}
       <div className="match-card-head">
@@ -146,13 +157,13 @@ function MatchCard({ m, provisional }: { m: UnifiedMatch; provisional?: boolean 
           <ScoreInput
             value={m.homeScore}
             onChange={onHomeChange}
-            disabled={!home && m.kind === 'ko'}
+            disabled={isOfficial || (!home && m.kind === 'ko')}
           />
           <span className="mc-dash">–</span>
           <ScoreInput
             value={m.awayScore}
             onChange={onAwayChange}
-            disabled={!away && m.kind === 'ko'}
+            disabled={isOfficial || (!away && m.kind === 'ko')}
           />
         </div>
         <div className="mc-side away">

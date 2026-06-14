@@ -100,6 +100,8 @@ export const ko: Translations = {
     pen: 'PK',
     stadium: '경기장',
     matchesCount: '경기',
+    official: '공식',
+    officialTitle: '실제 결과 잠금 — 편집 및 시뮬레이션 불가',
   },
   standings: {
     title: '순위표',

@@ -120,6 +120,8 @@ export interface Translations {
     pen: string;
     stadium: string;
     matchesCount: string; // "matchs"
+    official: string;       // badge "OFFICIEL"
+    officialTitle: string;  // tooltip — "Résultat réel verrouillé"
   };
   standings: {
     title: string;

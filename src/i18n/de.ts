@@ -100,6 +100,8 @@ export const de: Translations = {
     pen: 'ELF',
     stadium: 'Stadion',
     matchesCount: 'Spiele',
+    official: 'Offiziell',
+    officialTitle: 'Echtes Ergebnis gesperrt — kann nicht bearbeitet oder simuliert werden',
   },
   standings: {
     title: 'Tabelle',

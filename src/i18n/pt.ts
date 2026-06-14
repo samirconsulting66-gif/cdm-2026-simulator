@@ -100,6 +100,8 @@ export const pt: Translations = {
     pen: 'PEN',
     stadium: 'Estádio',
     matchesCount: 'jogos',
+    official: 'Oficial',
+    officialTitle: 'Resultado real bloqueado — não pode ser editado nem simulado',
   },
   standings: {
     title: 'Classificação',
