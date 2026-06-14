@@ -31,7 +31,7 @@ const RAW_FIXTURES: RawFixture[] = [
   { group: 'B', matchday: 1, homePos: 3, awayPos: 4, date: '13/06/2026', time: '20:00', stadium: 'sf'  },
   { group: 'C', matchday: 1, homePos: 1, awayPos: 2, date: '13/06/2026', time: '23:00', stadium: 'nyc' },
   { group: 'C', matchday: 1, homePos: 3, awayPos: 4, date: '14/06/2026', time: '02:00', stadium: 'bos' },
-  { group: 'D', matchday: 1, homePos: 3, awayPos: 4, date: '14/06/2026', time: '02:00', stadium: 'van' },
+  { group: 'D', matchday: 1, homePos: 3, awayPos: 4, date: '14/06/2026', time: '05:00', stadium: 'van' },
   { group: 'E', matchday: 1, homePos: 1, awayPos: 2, date: '14/06/2026', time: '18:00', stadium: 'hou' },
   { group: 'F', matchday: 1, homePos: 1, awayPos: 2, date: '14/06/2026', time: '21:00', stadium: 'dal' },
   { group: 'E', matchday: 1, homePos: 3, awayPos: 4, date: '15/06/2026', time: '00:00', stadium: 'phi' },
