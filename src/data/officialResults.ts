@@ -27,6 +27,7 @@ export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [
   { id: 'GF-1-12', homeScore: 2, awayScore: 2 }, // Pays-Bas - Japon (14/06) → 2-2
   { id: 'GE-1-34', homeScore: 1, awayScore: 0 }, // Côte d'Ivoire - Équateur (15/06) → CIV 1-0
   { id: 'GF-1-34', homeScore: 5, awayScore: 1 }, // Suède - Tunisie (15/06) → Suède 5-1
+  { id: 'GH-1-12', homeScore: 0, awayScore: 0 }, // Espagne - Cap-Vert (15/06) → 0-0
 ];
 
 export const OFFICIAL_KO_RESULTS: OfficialResult[] = [];
