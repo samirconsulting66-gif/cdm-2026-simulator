@@ -28,6 +28,9 @@ export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [
   { id: 'GE-1-34', homeScore: 1, awayScore: 0 }, // Côte d'Ivoire - Équateur (15/06) → CIV 1-0
   { id: 'GF-1-34', homeScore: 5, awayScore: 1 }, // Suède - Tunisie (15/06) → Suède 5-1
   { id: 'GH-1-12', homeScore: 0, awayScore: 0 }, // Espagne - Cap-Vert (15/06) → 0-0
+  { id: 'GG-1-12', homeScore: 1, awayScore: 1 }, // Belgique - Égypte (15/06) → 1-1
+  { id: 'GH-1-34', homeScore: 1, awayScore: 1 }, // Arabie Saoudite - Uruguay (15/06) → 1-1
+  { id: 'GG-1-34', homeScore: 2, awayScore: 2 }, // Iran - Nouvelle-Zélande (16/06) → 2-2
 ];
 
 export const OFFICIAL_KO_RESULTS: OfficialResult[] = [];
