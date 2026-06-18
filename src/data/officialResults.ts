@@ -31,6 +31,14 @@ export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [
   { id: 'GG-1-12', homeScore: 1, awayScore: 1 }, // Belgique - Égypte (15/06) → 1-1
   { id: 'GH-1-34', homeScore: 1, awayScore: 1 }, // Arabie Saoudite - Uruguay (15/06) → 1-1
   { id: 'GG-1-34', homeScore: 2, awayScore: 2 }, // Iran - Nouvelle-Zélande (16/06) → 2-2
+  { id: 'GI-1-12', homeScore: 3, awayScore: 1 }, // France - Sénégal (16/06) → 3-1
+  { id: 'GI-1-34', homeScore: 1, awayScore: 4 }, // Irak - Norvège (16/06) → 1-4
+  { id: 'GJ-1-12', homeScore: 3, awayScore: 0 }, // Argentine - Algérie (17/06) → 3-0
+  { id: 'GJ-1-34', homeScore: 3, awayScore: 1 }, // Autriche - Jordanie (17/06) → 3-1
+  { id: 'GK-1-12', homeScore: 1, awayScore: 1 }, // Portugal - RD Congo (17/06) → 1-1
+  { id: 'GL-1-12', homeScore: 4, awayScore: 2 }, // Angleterre - Croatie (17/06) → 4-2
+  { id: 'GL-1-34', homeScore: 1, awayScore: 0 }, // Ghana - Panama (18/06) → 1-0
+  { id: 'GK-1-34', homeScore: 1, awayScore: 3 }, // Ouzbékistan - Colombie (18/06) → 1-3
 ];
 
 export const OFFICIAL_KO_RESULTS: OfficialResult[] = [];
