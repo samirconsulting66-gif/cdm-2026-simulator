@@ -3,6 +3,10 @@ import { TEAMS_BY_ID } from '../data/teams';
 import { resolveBracket } from './bracket';
 import { buildInitialGroupMatches } from '../data/groups';
 import { buildInitialBracket } from '../data/bracket';
+import {
+  getOfficialGroupResult,
+  getOfficialKoResult,
+} from '../data/officialResults';
 
 // Distribution de Poisson par la méthode de Knuth
 function poisson(lambda: number): number {
@@ -90,6 +94,11 @@ export function simulateGroupsOnly(
   const forceOf = makeForceOf(forceOverrides);
 
   const groupMatches: GroupMatch[] = buildInitialGroupMatches().map(m => {
+    // Les matchs déjà joués IRL ne sont pas re-simulés : on conserve leur score.
+    const official = getOfficialGroupResult(m.id);
+    if (official) {
+      return { ...m, homeScore: official.homeScore, awayScore: official.awayScore };
+    }
     const { home, away } = simulateMatchScores(m.homeId, m.awayId, forceOf, alpha);
     return { ...m, homeScore: home, awayScore: away };
   });
@@ -119,6 +128,17 @@ export function simulateKnockoutOnly(
     knockout = knockout.map(m => {
       if (m.round !== round) return m;
       if (!m.homeId || !m.awayId) return m;
+      // Match KO déjà joué IRL : on conserve son score.
+      const official = getOfficialKoResult(m.id);
+      if (official) {
+        return {
+          ...m,
+          homeScore: official.homeScore,
+          awayScore: official.awayScore,
+          homePen: official.homePen ?? null,
+          awayPen: official.awayPen ?? null,
+        };
+      }
       const { home, away } = simulateMatchScores(m.homeId, m.awayId, forceOf, alpha);
       let homePen: number | null = null;
       let awayPen: number | null = null;
