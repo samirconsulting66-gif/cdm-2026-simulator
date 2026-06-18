@@ -41,6 +41,7 @@ export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [
   { id: 'GK-1-34', homeScore: 1, awayScore: 3 }, // Ouzbékistan - Colombie (18/06) → 1-3
   // ─── Journée 2 ───
   { id: 'GA-2-42', homeScore: 1, awayScore: 1 }, // M25 Tchéquie - Afrique du Sud (18/06) → 1-1
+  { id: 'GB-2-42', homeScore: 4, awayScore: 1 }, // M26 Suisse - Bosnie-Herzégovine (18/06) → Suisse 4-1
 ];
 
 export const OFFICIAL_KO_RESULTS: OfficialResult[] = [];
