@@ -39,6 +39,8 @@ export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [
   { id: 'GL-1-12', homeScore: 4, awayScore: 2 }, // Angleterre - Croatie (17/06) → 4-2
   { id: 'GL-1-34', homeScore: 1, awayScore: 0 }, // Ghana - Panama (18/06) → 1-0
   { id: 'GK-1-34', homeScore: 1, awayScore: 3 }, // Ouzbékistan - Colombie (18/06) → 1-3
+  // ─── Journée 2 ───
+  { id: 'GA-2-42', homeScore: 1, awayScore: 1 }, // M25 Tchéquie - Afrique du Sud (18/06) → 1-1
 ];
 
 export const OFFICIAL_KO_RESULTS: OfficialResult[] = [];
