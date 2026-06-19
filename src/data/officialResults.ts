@@ -44,6 +44,7 @@ export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [
   { id: 'GB-2-42', homeScore: 4, awayScore: 1 }, // M26 Suisse - Bosnie-Herzégovine (18/06) → Suisse 4-1
   { id: 'GB-2-13', homeScore: 6, awayScore: 0 }, // M27 Canada - Qatar (18/06) → Canada 6-0
   { id: 'GA-2-13', homeScore: 1, awayScore: 0 }, // M28 Mexique - Corée du Sud (19/06) → Mexique 1-0
+  { id: 'GD-2-13', homeScore: 2, awayScore: 0 }, // M29 États-Unis - Australie (19/06) → USA 2-0
 ];
 
 export const OFFICIAL_KO_RESULTS: OfficialResult[] = [];
