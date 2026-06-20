@@ -45,6 +45,9 @@ export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [
   { id: 'GB-2-13', homeScore: 6, awayScore: 0 }, // M27 Canada - Qatar (18/06) → Canada 6-0
   { id: 'GA-2-13', homeScore: 1, awayScore: 0 }, // M28 Mexique - Corée du Sud (19/06) → Mexique 1-0
   { id: 'GD-2-13', homeScore: 2, awayScore: 0 }, // M29 États-Unis - Australie (19/06) → USA 2-0
+  { id: 'GC-2-42', homeScore: 0, awayScore: 1 }, // M30 Écosse - Maroc (19/06) → Maroc 1-0
+  { id: 'GC-2-13', homeScore: 3, awayScore: 0 }, // M31 Brésil - Haïti (20/06) → Brésil 3-0
+  { id: 'GD-2-42', homeScore: 0, awayScore: 1 }, // M32 Turquie - Paraguay (20/06) → Paraguay 1-0
 ];
 
 export const OFFICIAL_KO_RESULTS: OfficialResult[] = [];
