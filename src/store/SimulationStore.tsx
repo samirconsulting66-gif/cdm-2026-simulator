@@ -24,7 +24,7 @@ function applyOfficialResults(state: SimState): SimState {
     if (!o) return m;
     return { ...m, homeScore: o.homeScore, awayScore: o.awayScore };
   });
-  const knockout: KM[] = state.knockout.map(m => {
+  const forcedKo: KM[] = state.knockout.map(m => {
     const o = OFFICIAL_KO_RESULTS.find(r => r.id === m.id);
     if (!o) return m;
     return {
@@ -35,6 +35,9 @@ function applyOfficialResults(state: SimState): SimState {
       awayPen: o.awayPen ?? null,
     };
   });
+  // Recalcule le bracket depuis les résultats courants → la Phase Finale
+  // reflète immédiatement les scores officiels (load / reset / simulate).
+  const knockout = resolveBracket(groupMatches, forcedKo);
   return { groupMatches, knockout };
 }
 
