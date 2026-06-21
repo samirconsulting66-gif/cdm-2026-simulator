@@ -3552,6 +3552,20 @@ a { color: inherit; text-decoration: none; }
   font-weight: 600;
 }
 
+/* Date du jour : vert léger pour la repérer d'un coup d'œil */
+.filter-dd-opt.is-highlight {
+  background: rgba(34, 197, 94, 0.16);
+}
+
+.filter-dd-opt.is-highlight:hover {
+  background: rgba(34, 197, 94, 0.24);
+}
+
+.filter-dd-opt.is-highlight .filter-dd-opt-label {
+  color: #15803d;
+  font-weight: 600;
+}
+
 .filter-dd-opt-icon {
   display: inline-flex;
   align-items: center;

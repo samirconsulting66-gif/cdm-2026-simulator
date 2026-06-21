@@ -18,15 +18,30 @@ interface Props<T extends string> {
   searchPlaceholder?: string;
   width?: number;
   align?: 'left' | 'right';
+  highlightValue?: T;   // Option mise en avant (vert léger + scroll auto à l'ouverture)
 }
 
 export function FilterDropdown<T extends string>({
   label, value, options, onChange,
   searchable = false, searchPlaceholder, width = 220, align = 'left',
+  highlightValue,
 }: Props<T>) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
   const rootRef = useRef<HTMLDivElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+  const highlightRef = useRef<HTMLButtonElement>(null);
+
+  // À l'ouverture, positionne la liste comme si on avait déjà scrollé jusqu'à
+  // l'option mise en avant (la date du jour).
+  useEffect(() => {
+    if (!open || highlightValue === undefined) return;
+    const listEl = listRef.current;
+    const hEl = highlightRef.current;
+    if (listEl && hEl) {
+      listEl.scrollTop += hEl.getBoundingClientRect().top - listEl.getBoundingClientRect().top - 4;
+    }
+  }, [open, highlightValue]);
 
   useEffect(() => {
     if (!open) return;
@@ -106,7 +121,7 @@ export function FilterDropdown<T extends string>({
               />
             </div>
           )}
-          <div className="filter-dd-list">
+          <div className="filter-dd-list" ref={listRef}>
             {renderedList.length === 0 && (
               <div className="filter-dd-empty">—</div>
             )}
@@ -116,13 +131,15 @@ export function FilterDropdown<T extends string>({
               }
               const opt = row.opt;
               const isActive = opt.value === value;
+              const isHighlight = highlightValue !== undefined && opt.value === highlightValue;
               return (
                 <button
                   key={opt.value}
+                  ref={isHighlight ? highlightRef : undefined}
                   type="button"
                   role="option"
                   aria-selected={isActive}
-                  className={`filter-dd-opt ${isActive ? 'active' : ''}`}
+                  className={`filter-dd-opt ${isActive ? 'active' : ''} ${isHighlight ? 'is-highlight' : ''}`}
                   onClick={() => { onChange(opt.value); setOpen(false); }}
                 >
                   {opt.icon && <span className="filter-dd-opt-icon">{opt.icon}</span>}

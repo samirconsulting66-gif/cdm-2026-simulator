@@ -53,6 +53,7 @@ export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [
   { id: 'GE-2-42', homeScore: 0, awayScore: 0 }, // M35 Équateur - Curaçao (21/06) → 0-0
   { id: 'GF-2-42', homeScore: 0, awayScore: 4 }, // M36 Tunisie - Japon (21/06) → Japon 4-0
   { id: 'GH-2-13', homeScore: 4, awayScore: 0 }, // M37 Espagne - Arabie Saoudite (21/06) → Espagne 4-0
+  { id: 'GG-2-13', homeScore: 0, awayScore: 0 }, // M38 Belgique - Iran (21/06) → 0-0
 ];
 
 export const OFFICIAL_KO_RESULTS: OfficialResult[] = [];

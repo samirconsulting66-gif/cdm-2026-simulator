@@ -233,6 +233,12 @@ export function MatchesPage() {
 
   const provisional = !areAllGroupsComplete(groupMatches);
 
+  // Date du jour (réelle) au format DD/MM/YYYY, pour la surligner dans le filtre Jour
+  const todayKey = useMemo(() => {
+    const now = new Date();
+    return `${pad2(now.getDate())}/${pad2(now.getMonth() + 1)}/${now.getFullYear()}`;
+  }, []);
+
   const PHASE_LABELS: Record<PhaseFilter, string> = {
     ALL: t.filters.allPhases,
     GROUP: t.phases.group,
@@ -478,6 +484,7 @@ export function MatchesPage() {
             value={dayFilter}
             onChange={setDayFilter}
             width={220}
+            highlightValue={todayKey}
             options={[
               {
                 value: 'ALL',
