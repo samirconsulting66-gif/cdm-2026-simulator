@@ -48,6 +48,10 @@ export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [
   { id: 'GC-2-42', homeScore: 0, awayScore: 1 }, // M30 Écosse - Maroc (19/06) → Maroc 1-0
   { id: 'GC-2-13', homeScore: 3, awayScore: 0 }, // M31 Brésil - Haïti (20/06) → Brésil 3-0
   { id: 'GD-2-42', homeScore: 0, awayScore: 1 }, // M32 Turquie - Paraguay (20/06) → Paraguay 1-0
+  { id: 'GF-2-13', homeScore: 5, awayScore: 1 }, // M33 Pays-Bas - Suède (20/06) → Pays-Bas 5-1
+  { id: 'GE-2-13', homeScore: 2, awayScore: 1 }, // M34 Allemagne - Côte d'Ivoire (20/06) → Allemagne 2-1
+  { id: 'GE-2-42', homeScore: 0, awayScore: 0 }, // M35 Équateur - Curaçao (21/06) → 0-0
+  { id: 'GF-2-42', homeScore: 0, awayScore: 4 }, // M36 Tunisie - Japon (21/06) → Japon 4-0
 ];
 
 export const OFFICIAL_KO_RESULTS: OfficialResult[] = [];

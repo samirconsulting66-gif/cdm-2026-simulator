@@ -85,10 +85,12 @@ export const ja: Translations = {
     group: 'グループ',
     phase: 'フェーズ',
     day: '日付',
+    matchday: '節',
     allTeams: '全チーム',
     allGroups: '全グループ',
     allPhases: '全フェーズ',
     allDays: '全日',
+    allMatchdays: '全節',
     groupX: 'グループ{x}',
   },
   matches: {

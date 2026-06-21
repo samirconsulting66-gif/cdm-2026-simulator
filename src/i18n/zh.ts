@@ -85,10 +85,12 @@ export const zh: Translations = {
     group: '小组',
     phase: '阶段',
     day: '日期',
+    matchday: '轮次',
     allTeams: '全部球队',
     allGroups: '全部小组',
     allPhases: '全部阶段',
     allDays: '全部日期',
+    allMatchdays: '全部轮次',
     groupX: '{x}组',
   },
   matches: {

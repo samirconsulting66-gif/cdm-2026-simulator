@@ -229,6 +229,7 @@ export function MatchesPage() {
   const [groupFilter, setGroupFilter] = useState<string>('ALL');
   const [phaseFilter, setPhaseFilter] = useState<PhaseFilter>('ALL');
   const [dayFilter, setDayFilter] = useState<string>('ALL');
+  const [matchdayFilter, setMatchdayFilter] = useState<string>('ALL');
 
   const provisional = !areAllGroupsComplete(groupMatches);
 
@@ -324,11 +325,14 @@ export function MatchesPage() {
         if (m.kind !== 'group' || m.group !== groupFilter) return false;
       }
       if (dayFilter !== 'ALL' && m.date !== dayFilter) return false;
+      if (matchdayFilter !== 'ALL') {
+        if (m.kind !== 'group' || String(m.matchday) !== matchdayFilter) return false;
+      }
       if (phaseFilter === 'ALL') return true;
       if (phaseFilter === 'GROUP') return m.kind === 'group';
       return m.kind === 'ko' && m.rawKo?.round === phaseFilter;
     });
-  }, [unified, teamFilter, groupFilter, phaseFilter, dayFilter]);
+  }, [unified, teamFilter, groupFilter, phaseFilter, dayFilter, matchdayFilter]);
 
   // Jours uniques présents dans la liste unifiée, triés chronologiquement
   const dayOptions = useMemo(() => {
@@ -437,6 +441,24 @@ export function MatchesPage() {
                 value: letter,
                 label: format(t.filters.groupX, { x: letter }),
                 icon: <span className="group-letter-icon">{letter}</span>,
+              })),
+            ]}
+          />
+          <FilterDropdown<string>
+            label={t.filters.matchday}
+            value={matchdayFilter}
+            onChange={setMatchdayFilter}
+            width={200}
+            options={[
+              {
+                value: 'ALL',
+                label: t.filters.allMatchdays,
+                icon: <span className="all-icon">📅</span>,
+              },
+              ...(['1', '2', '3'] as const).map(d => ({
+                value: d,
+                label: `${t.matches.matchdayN} ${d}`,
+                icon: <span className="group-letter-icon">{d}</span>,
               })),
             ]}
           />

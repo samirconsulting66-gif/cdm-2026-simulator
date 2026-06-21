@@ -85,10 +85,12 @@ export const es: Translations = {
     group: 'Grupo',
     phase: 'Fase',
     day: 'Día',
+    matchday: 'Jornada',
     allTeams: 'Todos los equipos',
     allGroups: 'Todos los grupos',
     allPhases: 'Todas las fases',
     allDays: 'Todos los días',
+    allMatchdays: 'Todas las jornadas',
     groupX: 'Grupo {x}',
   },
   matches: {

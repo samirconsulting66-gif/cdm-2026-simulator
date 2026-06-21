@@ -105,10 +105,12 @@ export interface Translations {
     group: string;
     phase: string;
     day: string;
+    matchday: string;
     allTeams: string;
     allGroups: string;
     allPhases: string;
     allDays: string;
+    allMatchdays: string;
     groupX: string;     // "Groupe {x}" ou "Group {x}"
   };
   matches: {

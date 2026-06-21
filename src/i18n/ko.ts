@@ -85,10 +85,12 @@ export const ko: Translations = {
     group: '조',
     phase: '단계',
     day: '날짜',
+    matchday: '라운드',
     allTeams: '모든 팀',
     allGroups: '모든 조',
     allPhases: '모든 단계',
     allDays: '모든 날짜',
+    allMatchdays: '모든 라운드',
     groupX: '{x}조',
   },
   matches: {

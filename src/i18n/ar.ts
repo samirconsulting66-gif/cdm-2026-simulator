@@ -85,10 +85,12 @@ export const ar: Translations = {
     group: 'المجموعة',
     phase: 'الدور',
     day: 'اليوم',
+    matchday: 'الجولة',
     allTeams: 'كل المنتخبات',
     allGroups: 'كل المجموعات',
     allPhases: 'كل الأدوار',
     allDays: 'كل الأيام',
+    allMatchdays: 'كل الجولات',
     groupX: 'المجموعة {x}',
   },
   matches: {
