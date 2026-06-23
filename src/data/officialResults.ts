@@ -57,6 +57,8 @@ export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [
   { id: 'GH-2-42', homeScore: 2, awayScore: 2 }, // M39 Uruguay - Cap-Vert (21/06) → 2-2
   { id: 'GG-2-42', homeScore: 1, awayScore: 3 }, // M40 Nouvelle-Zélande - Égypte (22/06) → Égypte 3-1
   { id: 'GJ-2-13', homeScore: 2, awayScore: 0 }, // M41 Argentine - Autriche (22/06) → Argentine 2-0
+  { id: 'GI-2-13', homeScore: 3, awayScore: 0 }, // M42 France - Irak (22/06) → France 3-0
+  { id: 'GI-2-42', homeScore: 3, awayScore: 2 }, // M43 Norvège - Sénégal (23/06) → Norvège 3-2
 ];
 
 export const OFFICIAL_KO_RESULTS: OfficialResult[] = [];
