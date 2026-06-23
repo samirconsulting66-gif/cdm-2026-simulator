@@ -61,6 +61,7 @@ export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [
   { id: 'GI-2-42', homeScore: 3, awayScore: 2 }, // M43 Norvège - Sénégal (23/06) → Norvège 3-2
   { id: 'GJ-2-42', homeScore: 1, awayScore: 2 }, // M44 Jordanie - Algérie (23/06) → Algérie 2-1
   { id: 'GK-2-13', homeScore: 5, awayScore: 0 }, // M45 Portugal - Ouzbékistan (23/06) → Portugal 5-0
+  { id: 'GL-2-13', homeScore: 0, awayScore: 0 }, // M46 Angleterre - Ghana (23/06) → 0-0
 ];
 
 export const OFFICIAL_KO_RESULTS: OfficialResult[] = [];
