@@ -62,6 +62,8 @@ export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [
   { id: 'GJ-2-42', homeScore: 1, awayScore: 2 }, // M44 Jordanie - Algérie (23/06) → Algérie 2-1
   { id: 'GK-2-13', homeScore: 5, awayScore: 0 }, // M45 Portugal - Ouzbékistan (23/06) → Portugal 5-0
   { id: 'GL-2-13', homeScore: 0, awayScore: 0 }, // M46 Angleterre - Ghana (23/06) → 0-0
+  { id: 'GL-2-42', homeScore: 0, awayScore: 1 }, // M47 Panama - Croatie (24/06) → Croatie 1-0
+  { id: 'GK-2-42', homeScore: 1, awayScore: 0 }, // M48 Colombie - RD Congo (24/06) → Colombie 1-0
 ];
 
 export const OFFICIAL_KO_RESULTS: OfficialResult[] = [];
