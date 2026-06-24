@@ -64,6 +64,9 @@ export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [
   { id: 'GL-2-13', homeScore: 0, awayScore: 0 }, // M46 Angleterre - Ghana (23/06) → 0-0
   { id: 'GL-2-42', homeScore: 0, awayScore: 1 }, // M47 Panama - Croatie (24/06) → Croatie 1-0
   { id: 'GK-2-42', homeScore: 1, awayScore: 0 }, // M48 Colombie - RD Congo (24/06) → Colombie 1-0
+  // ─── Journée 3 ───
+  { id: 'GB-3-41', homeScore: 2, awayScore: 1 }, // M49 Suisse - Canada (24/06) → Suisse 2-1
+  { id: 'GB-3-23', homeScore: 3, awayScore: 1 }, // M50 Bosnie-Herzégovine - Qatar (24/06) → Bosnie 3-1
 ];
 
 export const OFFICIAL_KO_RESULTS: OfficialResult[] = [];
