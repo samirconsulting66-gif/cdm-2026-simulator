@@ -71,6 +71,8 @@ export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [
   { id: 'GC-3-23', homeScore: 4, awayScore: 2 }, // M52 Maroc - Haïti (24/06) → Maroc 4-2
   { id: 'GA-3-41', homeScore: 0, awayScore: 3 }, // M53 Tchéquie - Mexique (25/06) → Mexique 3-0
   { id: 'GA-3-23', homeScore: 1, awayScore: 0 }, // M54 Afrique du Sud - Corée du Sud (25/06) → Afrique du Sud 1-0
+  { id: 'GE-3-41', homeScore: 2, awayScore: 1 }, // M55 Équateur - Allemagne (25/06) → Équateur 2-1
+  { id: 'GE-3-23', homeScore: 0, awayScore: 2 }, // M56 Curaçao - Côte d'Ivoire (25/06) → Côte d'Ivoire 2-0
 ];
 
 export const OFFICIAL_KO_RESULTS: OfficialResult[] = [];
