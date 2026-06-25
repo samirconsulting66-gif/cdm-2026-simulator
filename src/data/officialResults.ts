@@ -69,6 +69,8 @@ export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [
   { id: 'GB-3-23', homeScore: 3, awayScore: 1 }, // M50 Bosnie-Herzégovine - Qatar (24/06) → Bosnie 3-1
   { id: 'GC-3-41', homeScore: 0, awayScore: 3 }, // M51 Écosse - Brésil (24/06) → Brésil 3-0
   { id: 'GC-3-23', homeScore: 4, awayScore: 2 }, // M52 Maroc - Haïti (24/06) → Maroc 4-2
+  { id: 'GA-3-41', homeScore: 0, awayScore: 3 }, // M53 Tchéquie - Mexique (25/06) → Mexique 3-0
+  { id: 'GA-3-23', homeScore: 1, awayScore: 0 }, // M54 Afrique du Sud - Corée du Sud (25/06) → Afrique du Sud 1-0
 ];
 
 export const OFFICIAL_KO_RESULTS: OfficialResult[] = [];
