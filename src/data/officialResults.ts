@@ -67,6 +67,8 @@ export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [
   // ─── Journée 3 ───
   { id: 'GB-3-41', homeScore: 2, awayScore: 1 }, // M49 Suisse - Canada (24/06) → Suisse 2-1
   { id: 'GB-3-23', homeScore: 3, awayScore: 1 }, // M50 Bosnie-Herzégovine - Qatar (24/06) → Bosnie 3-1
+  { id: 'GC-3-41', homeScore: 0, awayScore: 3 }, // M51 Écosse - Brésil (24/06) → Brésil 3-0
+  { id: 'GC-3-23', homeScore: 4, awayScore: 2 }, // M52 Maroc - Haïti (24/06) → Maroc 4-2
 ];
 
 export const OFFICIAL_KO_RESULTS: OfficialResult[] = [];
