@@ -77,6 +77,8 @@ export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [
   { id: 'GF-3-41', homeScore: 1, awayScore: 3 }, // M58 Tunisie - Pays-Bas (26/06) → Pays-Bas 3-1
   { id: 'GD-3-41', homeScore: 3, awayScore: 2 }, // M59 Turquie - États-Unis (26/06) → Turquie 3-2
   { id: 'GD-3-23', homeScore: 0, awayScore: 0 }, // M60 Paraguay - Australie (26/06) → 0-0
+  { id: 'GI-3-41', homeScore: 1, awayScore: 4 }, // M61 Norvège - France (26/06) → France 4-1
+  { id: 'GI-3-23', homeScore: 5, awayScore: 0 }, // M62 Sénégal - Irak (26/06) → Sénégal 5-0
 ];
 
 export const OFFICIAL_KO_RESULTS: OfficialResult[] = [];
