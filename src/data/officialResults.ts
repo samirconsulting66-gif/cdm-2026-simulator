@@ -75,6 +75,8 @@ export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [
   { id: 'GE-3-23', homeScore: 0, awayScore: 2 }, // M56 Curaçao - Côte d'Ivoire (25/06) → Côte d'Ivoire 2-0
   { id: 'GF-3-23', homeScore: 1, awayScore: 1 }, // M57 Japon - Suède (26/06) → 1-1
   { id: 'GF-3-41', homeScore: 1, awayScore: 3 }, // M58 Tunisie - Pays-Bas (26/06) → Pays-Bas 3-1
+  { id: 'GD-3-41', homeScore: 3, awayScore: 2 }, // M59 Turquie - États-Unis (26/06) → Turquie 3-2
+  { id: 'GD-3-23', homeScore: 0, awayScore: 0 }, // M60 Paraguay - Australie (26/06) → 0-0
 ];
 
 export const OFFICIAL_KO_RESULTS: OfficialResult[] = [];
