@@ -46,24 +46,116 @@ export function computeStandings(
       ...s,
       gd: s.gf - s.ga,
     }));
-    const cmp = makeComparator(forceOverrides);
-    arr.sort(cmp);
-    arr.forEach((s, i) => { s.rank = i + 1; });
-    result[letter] = arr;
+    const ranked = rankGroup(arr, groupMatches, forceOverrides);
+    ranked.forEach((s, i) => { s.rank = i + 1; });
+    result[letter] = ranked;
   }
 
   return result as Record<GroupLetter, Standing[]>;
 }
 
-function makeComparator(forceOverrides: Record<string, number>) {
+// Classement d'un groupe — règlement FIFA Coupe du Monde 2026.
+// À égalité de points, la CONFRONTATION DIRECTE prime sur les critères
+// généraux (changement majeur vs éditions précédentes). Ordre officiel :
+//   1. points dans les matchs entre les équipes à égalité
+//   2. différence de buts entre les équipes à égalité
+//   3. buts marqués entre les équipes à égalité
+//   4. différence de buts générale
+//   5. buts marqués généraux
+//   6. fair-play (cartons — non suivi ici)
+//   7. classement FIFA (approximé par la Force)
+function rankGroup(
+  teams: Standing[],
+  matches: GroupMatch[],
+  forceOverrides: Record<string, number>,
+): Standing[] {
+  const byPoints = [...teams].sort((a, b) => b.points - a.points);
+  const out: Standing[] = [];
+  let i = 0;
+  while (i < byPoints.length) {
+    let j = i + 1;
+    while (j < byPoints.length && byPoints[j].points === byPoints[i].points) j++;
+    const tied = byPoints.slice(i, j);
+    out.push(...(tied.length > 1 ? breakTie(tied, matches, forceOverrides) : tied));
+    i = j;
+  }
+  return out;
+}
+
+type MiniRow = { pts: number; gd: number; gf: number };
+
+// Mini-championnat ne comptant que les matchs entre les équipes concernées.
+function miniTable(teams: Standing[], matches: GroupMatch[]): Map<string, MiniRow> {
+  const ids = new Set(teams.map(t => t.teamId));
+  const m = new Map<string, MiniRow>();
+  for (const t of teams) m.set(t.teamId, { pts: 0, gd: 0, gf: 0 });
+  for (const g of matches) {
+    if (g.homeScore === null || g.awayScore === null) continue;
+    if (!ids.has(g.homeId) || !ids.has(g.awayId)) continue;
+    const h = m.get(g.homeId)!;
+    const a = m.get(g.awayId)!;
+    h.gf += g.homeScore; a.gf += g.awayScore;
+    h.gd += g.homeScore - g.awayScore;
+    a.gd += g.awayScore - g.homeScore;
+    if (g.homeScore > g.awayScore) h.pts += 3;
+    else if (g.homeScore < g.awayScore) a.pts += 3;
+    else { h.pts++; a.pts++; }
+  }
+  return m;
+}
+
+// Critères généraux (4 → 7), utilisés quand la confrontation directe ne sépare pas.
+function overallComparator(forceOverrides: Record<string, number>) {
   const forceOf = (id: string) =>
     forceOverrides[id] ?? TEAMS_BY_ID[id]?.force ?? 0;
   return (a: Standing, b: Standing): number => {
-    if (b.points !== a.points) return b.points - a.points;
     if (b.gd !== a.gd) return b.gd - a.gd;
     if (b.gf !== a.gf) return b.gf - a.gf;
     return forceOf(b.teamId) - forceOf(a.teamId);
   };
+}
+
+// Départage un paquet d'équipes à égalité de points.
+// Récursif : si la confrontation directe sépare le paquet en sous-groupes
+// encore à égalité, on la ré-applique au sous-groupe (conforme au règlement).
+function breakTie(
+  tied: Standing[],
+  matches: GroupMatch[],
+  forceOverrides: Record<string, number>,
+): Standing[] {
+  const mini = miniTable(tied, matches);
+  const sorted = [...tied].sort((a, b) => {
+    const ma = mini.get(a.teamId)!;
+    const mb = mini.get(b.teamId)!;
+    if (mb.pts !== ma.pts) return mb.pts - ma.pts;
+    if (mb.gd !== ma.gd) return mb.gd - ma.gd;
+    if (mb.gf !== ma.gf) return mb.gf - ma.gf;
+    return 0;
+  });
+
+  const out: Standing[] = [];
+  let i = 0;
+  while (i < sorted.length) {
+    const mi = mini.get(sorted[i].teamId)!;
+    let j = i + 1;
+    while (j < sorted.length) {
+      const mj = mini.get(sorted[j].teamId)!;
+      if (mj.pts === mi.pts && mj.gd === mi.gd && mj.gf === mi.gf) j++;
+      else break;
+    }
+    const run = sorted.slice(i, j);
+    if (run.length === 1) {
+      out.push(run[0]);
+    } else if (run.length === tied.length) {
+      // la confrontation directe n'a départagé personne → critères généraux
+      out.push(...[...run].sort(overallComparator(forceOverrides)));
+    } else {
+      // sous-groupe encore à égalité → ré-application de la confrontation directe
+      out.push(...breakTie(run, matches, forceOverrides));
+    }
+    i = j;
+  }
+  return out;
 }
 
 export function compareStandings(a: Standing, b: Standing): number {
