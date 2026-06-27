@@ -79,6 +79,10 @@ export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [
   { id: 'GD-3-23', homeScore: 0, awayScore: 0 }, // M60 Paraguay - Australie (26/06) → 0-0
   { id: 'GI-3-41', homeScore: 1, awayScore: 4 }, // M61 Norvège - France (26/06) → France 4-1
   { id: 'GI-3-23', homeScore: 5, awayScore: 0 }, // M62 Sénégal - Irak (26/06) → Sénégal 5-0
+  { id: 'GH-3-23', homeScore: 0, awayScore: 0 }, // M63 Cap-Vert - Arabie Saoudite (27/06) → 0-0
+  { id: 'GH-3-41', homeScore: 0, awayScore: 1 }, // M64 Uruguay - Espagne (27/06) → Espagne 1-0
+  { id: 'GG-3-23', homeScore: 1, awayScore: 1 }, // M65 Égypte - Iran (27/06) → 1-1
+  { id: 'GG-3-41', homeScore: 1, awayScore: 5 }, // M66 Nouvelle-Zélande - Belgique (27/06) → Belgique 5-1
 ];
 
 export const OFFICIAL_KO_RESULTS: OfficialResult[] = [];
