@@ -85,6 +85,10 @@ export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [
   { id: 'GG-3-41', homeScore: 1, awayScore: 5 }, // M66 Nouvelle-Zélande - Belgique (27/06) → Belgique 5-1
   { id: 'GL-3-41', homeScore: 0, awayScore: 2 }, // M67 Panama - Angleterre (27/06) → Angleterre 2-0
   { id: 'GL-3-23', homeScore: 2, awayScore: 1 }, // M68 Croatie - Ghana (27/06) → Croatie 2-1
+  { id: 'GK-3-41', homeScore: 0, awayScore: 0 }, // M69 Colombie - Portugal (28/06) → 0-0
+  { id: 'GK-3-23', homeScore: 3, awayScore: 1 }, // M70 RD Congo - Ouzbékistan (28/06) → RD Congo 3-1
+  { id: 'GJ-3-23', homeScore: 3, awayScore: 3 }, // M71 Algérie - Autriche (28/06) → 3-3
+  { id: 'GJ-3-41', homeScore: 1, awayScore: 3 }, // M72 Jordanie - Argentine (28/06) → Argentine 3-1
 ];
 
 export const OFFICIAL_KO_RESULTS: OfficialResult[] = [];
