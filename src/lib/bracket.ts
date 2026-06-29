@@ -11,7 +11,7 @@ import {
 } from '../data/fifaThirdPlaceTable';
 
 const R32_THIRD_SLOTS_ORDER = [
-  'M74', 'M77', 'M79', 'M80', 'M81', 'M82', 'M85', 'M87',
+  'M75', 'M78', 'M79', 'M80', 'M82', 'M81', 'M85', 'M88',
 ];
 
 // Pour chaque slot accueillant un 3ᵉ, la lettre du groupe interdit (= groupe du 1ᵉʳ

@@ -17,11 +17,11 @@ export const FIFA_THIRD_PLACE_SLOTS: readonly SlotKey[] = ['1A', '1B', '1D', '1E
 export const MATCH_TO_FIFA_SLOT: Record<string, SlotKey> = {
   M79: '1A', // 1A vs 3CEFHI
   M85: '1B', // 1B vs 3EFGIJ
-  M81: '1D', // 1D vs 3BEFIJ
-  M74: '1E', // 1E vs 3ABCDF
-  M82: '1G', // 1G vs 3AEHIJ
-  M77: '1I', // 1I vs 3CDFGH
-  M87: '1K', // 1K vs 3DEIJL
+  M82: '1D', // 1D vs 3BEFIJ
+  M75: '1E', // 1E vs 3ABCDF
+  M81: '1G', // 1G vs 3AEHIJ
+  M78: '1I', // 1I vs 3CDFGH
+  M88: '1K', // 1K vs 3DEIJL
   M80: '1L', // 1L vs 3EHIJK
 };
 

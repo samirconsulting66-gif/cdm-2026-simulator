@@ -11,7 +11,7 @@ import {
   groupStageProgress,
 } from '../lib/standings';
 
-const THIRD_SLOT_BY_RANK = ['M74', 'M77', 'M79', 'M80', 'M81', 'M82', 'M85', 'M87'];
+const THIRD_SLOT_BY_RANK = ['M75', 'M78', 'M79', 'M80', 'M82', 'M81', 'M85', 'M88'];
 
 function GroupStandingCard({ letter }: { letter: GroupLetter }) {
   const { groupMatches, standings } = useSim();
