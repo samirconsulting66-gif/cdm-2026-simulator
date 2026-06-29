@@ -26,6 +26,7 @@ import {
   QF_LEFT_IDS, QF_RIGHT_IDS,
 } from '../data/bracket';
 import type { KnockoutMatch } from '../types';
+import { isOfficialMatch } from '../data/officialResults';
 
 function KoTeamRow({
   match, side,
@@ -137,6 +138,26 @@ function PenaltyControls({ match }: { match: KnockoutMatch }) {
   );
 }
 
+function AetControl({ match }: { match: KnockoutMatch }) {
+  const { setKoAet } = useSim();
+  const { t } = useT();
+  if (match.homeScore === null || match.awayScore === null) return null;
+  if (!match.homeId || !match.awayId) return null;
+  const official = isOfficialMatch(match.id);
+  return (
+    <label className={`ko-aet-row ${match.aet ? 'is-on' : ''}`} title={t.matches.aetTitle}>
+      <input
+        type="checkbox"
+        className="ko-aet-check"
+        checked={!!match.aet}
+        disabled={official}
+        onChange={(e) => setKoAet(match.id, e.target.checked)}
+      />
+      <span className="ko-aet-text">{t.matches.aet}</span>
+    </label>
+  );
+}
+
 function KoMatchCard({ matchId, extraClass, provisional }: { matchId: string; extraClass?: string; provisional?: boolean }) {
   const { knockout } = useSim();
   const { shift } = useTimezone();
@@ -151,7 +172,10 @@ function KoMatchCard({ matchId, extraClass, provisional }: { matchId: string; ex
   return (
     <div className={`ko-match ${extraClass ?? ''} ${done ? 'is-done' : ''} ${winner ? 'has-winner' : ''} ${showProvBadge ? 'is-provisional' : ''}`}>
       <div className="ko-match-meta">
-        <span className="ko-match-label">{m.label}</span>
+        <span className="ko-match-label">
+          {m.label}
+          {m.aet && <span className="ko-aet-badge" title={t.matches.aetTitle}>{t.matches.aet}</span>}
+        </span>
         <span className="ko-match-date">
           {s.date.slice(0, 5)} · {s.time}
           {s.dayDelta !== 0 && (
@@ -161,6 +185,7 @@ function KoMatchCard({ matchId, extraClass, provisional }: { matchId: string; ex
       </div>
       <KoTeamRow match={m} side="home" />
       <KoTeamRow match={m} side="away" />
+      <AetControl match={m} />
       <PenaltyControls match={m} />
       <div className="ko-match-foot">{stadiumLabel(m.stadium)}</div>
       {showProvBadge && (

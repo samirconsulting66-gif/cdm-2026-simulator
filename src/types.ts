@@ -50,6 +50,7 @@ export interface KnockoutMatch {
   awayScore: number | null;
   homePen: number | null;
   awayPen: number | null;
+  aet: boolean; // remporté après prolongation (a.p.)
 }
 
 export interface Standing {

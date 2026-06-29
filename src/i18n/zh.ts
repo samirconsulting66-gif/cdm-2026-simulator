@@ -100,6 +100,8 @@ export const zh: Translations = {
     empty: '没有符合筛选条件的比赛。',
     penalties: '点球大战',
     pen: '点球',
+    aet: '加时',
+    aetTitle: '加时赛后',
     stadium: '体育场',
     matchesCount: '场比赛',
     official: '官方',

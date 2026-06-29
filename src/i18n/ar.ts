@@ -100,6 +100,8 @@ export const ar: Translations = {
     empty: 'لا توجد مباريات مطابقة لهذه الفلاتر.',
     penalties: 'ركلات الترجيح',
     pen: 'ت.ت',
+    aet: 'ب.إ',
+    aetTitle: 'بعد الوقت الإضافي',
     stadium: 'الملعب',
     matchesCount: 'مباراة',
     official: 'رسمي',

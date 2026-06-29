@@ -100,6 +100,8 @@ export const ja: Translations = {
     empty: '条件に合う試合はありません。',
     penalties: 'PK戦',
     pen: 'PK',
+    aet: '延長',
+    aetTitle: '延長戦の末',
     stadium: 'スタジアム',
     matchesCount: '試合',
     official: '公式',

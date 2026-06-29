@@ -91,5 +91,6 @@ export function buildInitialBracket(): KnockoutMatch[] {
     awayScore: null,
     homePen: null,
     awayPen: null,
+    aet: false,
   }));
 }

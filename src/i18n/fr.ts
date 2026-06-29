@@ -100,6 +100,8 @@ export const fr: Translations = {
     empty: 'Aucun match ne correspond à ces filtres.',
     penalties: 'Tirs au but',
     pen: 'TAB',
+    aet: 'AP',
+    aetTitle: 'Après prolongation',
     stadium: 'Stade',
     matchesCount: 'matchs',
     official: 'Officiel',

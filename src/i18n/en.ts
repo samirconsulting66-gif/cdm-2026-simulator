@@ -100,6 +100,8 @@ export const en: Translations = {
     empty: 'No matches match these filters.',
     penalties: 'Penalties',
     pen: 'PEN',
+    aet: 'AET',
+    aetTitle: 'After extra time',
     stadium: 'Stadium',
     matchesCount: 'matches',
     official: 'Official',

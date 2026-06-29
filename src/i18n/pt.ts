@@ -100,6 +100,8 @@ export const pt: Translations = {
     empty: 'Nenhum jogo corresponde a estes filtros.',
     penalties: 'Pênaltis',
     pen: 'PEN',
+    aet: 'AP',
+    aetTitle: 'Após prorrogação',
     stadium: 'Estádio',
     matchesCount: 'jogos',
     official: 'Oficial',

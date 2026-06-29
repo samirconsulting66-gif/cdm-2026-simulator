@@ -100,6 +100,8 @@ export const ko: Translations = {
     empty: '조건에 맞는 경기가 없습니다.',
     penalties: '승부차기',
     pen: 'PK',
+    aet: '연장',
+    aetTitle: '연장전 끝에',
     stadium: '경기장',
     matchesCount: '경기',
     official: '공식',

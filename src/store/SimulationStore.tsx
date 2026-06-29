@@ -33,6 +33,7 @@ function applyOfficialResults(state: SimState): SimState {
       awayScore: o.awayScore,
       homePen: o.homePen ?? null,
       awayPen: o.awayPen ?? null,
+      aet: o.aet ?? false,
     };
   });
   // Recalcule le bracket depuis les résultats courants → la Phase Finale
@@ -69,6 +70,7 @@ interface SimContextValue extends SimState {
     homePen?: number | null,
     awayPen?: number | null,
   ) => void;
+  setKoAet: (id: string, aet: boolean) => void;
   reset: () => void;
   simulate: () => void;
   simulateGroups: () => void;
@@ -185,6 +187,14 @@ export function SimulationProvider({ children }: { children: ReactNode }) {
     });
   };
 
+  const setKoAet: SimContextValue['setKoAet'] = (id, aet) => {
+    if (isOfficialMatch(id)) return; // verrouillé
+    setState(prev => ({
+      ...prev,
+      knockout: prev.knockout.map(m => (m.id === id ? { ...m, aet } : m)),
+    }));
+  };
+
   const reset = () => {
     setState(applyOfficialResults({
       groupMatches: buildInitialGroupMatches(),
@@ -243,6 +253,7 @@ export function SimulationProvider({ children }: { children: ReactNode }) {
     ...state,
     setGroupScore,
     setKoScore,
+    setKoAet,
     reset,
     simulate,
     simulateGroups,

@@ -2608,6 +2608,46 @@ a { color: inherit; text-decoration: none; }
   color: var(--text-soft);
 }
 
+/* Après prolongation (a.p.) */
+.ko-aet-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 3px 4px 1px;
+  font-size: 9.5px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  cursor: pointer;
+  user-select: none;
+}
+.ko-aet-row.is-on {
+  color: #6d28d9;
+  font-weight: 700;
+}
+.ko-aet-check {
+  width: 12px;
+  height: 12px;
+  accent-color: #6d28d9;
+  cursor: pointer;
+  margin: 0;
+}
+.ko-aet-check:disabled {
+  cursor: default;
+}
+.ko-aet-badge {
+  margin-left: 5px;
+  padding: 0 4px;
+  border-radius: 3px;
+  background: #6d28d9;
+  color: #fff;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  vertical-align: middle;
+}
+
 .ko-match-foot {
   font-size: 10px;
   color: var(--text-soft);
@@ -3928,6 +3968,43 @@ a { color: inherit; text-decoration: none; }
   width: 30px;
   padding: 2px 0;
   font-size: 12px;
+}
+
+/* Après prolongation (a.p.) — page Matchs */
+.match-card-aet {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--text-soft);
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  user-select: none;
+}
+.match-card-aet.is-on {
+  color: #6d28d9;
+  font-weight: 600;
+}
+.match-card-aet input {
+  width: 14px;
+  height: 14px;
+  accent-color: #6d28d9;
+  cursor: pointer;
+  margin: 0;
+}
+.match-card-aet input:disabled {
+  cursor: default;
+}
+.mc-aet-badge {
+  margin-left: 6px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: #6d28d9;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
 }
 
 .match-card-foot {

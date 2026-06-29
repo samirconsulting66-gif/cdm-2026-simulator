@@ -120,6 +120,8 @@ export interface Translations {
     empty: string;
     penalties: string;
     pen: string;
+    aet: string;       // badge court — "AP" / "AET" / "n.V."…
+    aetTitle: string;  // tooltip + libellé case — "Après prolongation"
     stadium: string;
     matchesCount: string; // "matchs"
     official: string;       // badge "OFFICIEL"

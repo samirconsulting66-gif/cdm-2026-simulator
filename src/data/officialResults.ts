@@ -12,6 +12,7 @@ export interface OfficialResult {
   awayScore: number;
   homePen?: number | null;
   awayPen?: number | null;
+  aet?: boolean; // remporté après prolongation (a.p.)
 }
 
 export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [

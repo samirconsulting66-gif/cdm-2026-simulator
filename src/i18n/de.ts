@@ -100,6 +100,8 @@ export const de: Translations = {
     empty: 'Keine Spiele entsprechen diesen Filtern.',
     penalties: 'Elfmeterschießen',
     pen: 'ELF',
+    aet: 'n.V.',
+    aetTitle: 'Nach Verlängerung',
     stadium: 'Stadion',
     matchesCount: 'Spiele',
     official: 'Offiziell',

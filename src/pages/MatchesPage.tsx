@@ -50,6 +50,7 @@ interface UnifiedMatch {
   awayScore: number | null;
   homePen?: number | null;
   awayPen?: number | null;
+  aet?: boolean;
   rawGroup?: GroupMatch;
   rawKo?: KnockoutMatch;
 }
@@ -84,7 +85,7 @@ function ScoreInput({
 }
 
 function MatchCard({ m, provisional }: { m: UnifiedMatch; provisional?: boolean }) {
-  const { setGroupScore, setKoScore } = useSim();
+  const { setGroupScore, setKoScore, setKoAet } = useSim();
   const { t, teamName, stadiumLabel } = useT();
   const home = m.homeId ? TEAMS_BY_ID[m.homeId] : null;
   const away = m.awayId ? TEAMS_BY_ID[m.awayId] : null;
@@ -165,6 +166,9 @@ function MatchCard({ m, provisional }: { m: UnifiedMatch; provisional?: boolean 
             onChange={onAwayChange}
             disabled={isOfficial || (!away && m.kind === 'ko')}
           />
+          {m.kind === 'ko' && m.aet && (
+            <span className="mc-aet-badge" title={t.matches.aetTitle}>{t.matches.aet}</span>
+          )}
         </div>
         <div className="mc-side away">
           {away ? (
@@ -208,6 +212,18 @@ function MatchCard({ m, provisional }: { m: UnifiedMatch; provisional?: boolean 
             }}
           />
         </div>
+      )}
+
+      {m.kind === 'ko' && home && away && m.homeScore !== null && m.awayScore !== null && (
+        <label className={`match-card-aet ${m.aet ? 'is-on' : ''}`} title={t.matches.aetTitle}>
+          <input
+            type="checkbox"
+            checked={!!m.aet}
+            disabled={isOfficial}
+            onChange={(e) => setKoAet(m.id, e.target.checked)}
+          />
+          <span>{t.matches.aetTitle}</span>
+        </label>
       )}
 
       <div className="match-card-foot">
@@ -315,6 +331,7 @@ export function MatchesPage() {
         awayScore: k.awayScore,
         homePen: k.homePen,
         awayPen: k.awayPen,
+        aet: k.aet,
         rawKo: k,
       });
     }
