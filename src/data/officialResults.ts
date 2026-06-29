@@ -91,7 +91,10 @@ export const OFFICIAL_GROUP_RESULTS: OfficialResult[] = [
   { id: 'GJ-3-41', homeScore: 1, awayScore: 3 }, // M72 Jordanie - Argentine (28/06) → Argentine 3-1
 ];
 
-export const OFFICIAL_KO_RESULTS: OfficialResult[] = [];
+export const OFFICIAL_KO_RESULTS: OfficialResult[] = [
+  // ─── Seizièmes (R32) ───
+  { id: 'M73', homeScore: 0, awayScore: 1 }, // Afrique du Sud (2A) - Canada (2B) (28/06) → Canada 1-0
+];
 
 const officialIds = new Set<string>([
   ...OFFICIAL_GROUP_RESULTS.map(r => r.id),
