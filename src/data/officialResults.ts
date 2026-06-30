@@ -96,6 +96,8 @@ export const OFFICIAL_KO_RESULTS: OfficialResult[] = [
   // ─── Seizièmes (R32) ───
   { id: 'M73', homeScore: 0, awayScore: 1 }, // Afrique du Sud (2A) - Canada (2B) (28/06) → Canada 1-0
   { id: 'M74', homeScore: 2, awayScore: 1 }, // Brésil (1C) - Japon (2F) (29/06) → Brésil 2-1
+  { id: 'M75', homeScore: 1, awayScore: 1, homePen: 3, awayPen: 4 }, // Allemagne (1E) - Paraguay (3ABCDF) (29/06) → 1-1, Paraguay 4-3 TAB
+  { id: 'M76', homeScore: 1, awayScore: 1, homePen: 2, awayPen: 3 }, // Pays-Bas (1F) - Maroc (2C) (30/06) → 1-1, Maroc 3-2 TAB
 ];
 
 const officialIds = new Set<string>([
