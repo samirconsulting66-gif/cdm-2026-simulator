@@ -100,6 +100,7 @@ export const OFFICIAL_KO_RESULTS: OfficialResult[] = [
   { id: 'M76', homeScore: 1, awayScore: 1, homePen: 2, awayPen: 3 }, // Pays-Bas (1F) - Maroc (2C) (30/06) → 1-1, Maroc 3-2 TAB
   { id: 'M77', homeScore: 1, awayScore: 2 }, // Côte d'Ivoire (2E) - Norvège (2I) (30/06) → Norvège 2-1
   { id: 'M78', homeScore: 3, awayScore: 0 }, // France (1I) - Suède (3CDFGH) (30/06) → France 3-0
+  { id: 'M79', homeScore: 2, awayScore: 0 }, // Mexique (1A) - Équateur (3CEFHI) (01/07) → Mexique 2-0
 ];
 
 const officialIds = new Set<string>([
